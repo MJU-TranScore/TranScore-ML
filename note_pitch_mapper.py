@@ -126,4 +126,4 @@ for img_name in image_list:
     plt.imshow(cv2.cvtColor(vis, cv2.COLOR_BGR2RGB))
     plt.axis('off')
     plt.show()
-#gpt 수정버전
+    
