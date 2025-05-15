@@ -1,0 +1,1546 @@
+{
+    "boxes": [
+        {
+            "id": "1",
+            "label": "staff_line",
+            "x": 320,
+            "y": 104,
+            "width": 388,
+            "height": 16,
+            "confidence": null
+        },
+        {
+            "id": "2",
+            "label": "staff_line",
+            "x": 320,
+            "y": 199,
+            "width": 388,
+            "height": 16,
+            "confidence": null
+        },
+        {
+            "id": "3",
+            "label": "staff_line",
+            "x": 320,
+            "y": 295,
+            "width": 389,
+            "height": 16,
+            "confidence": null
+        },
+        {
+            "id": "4",
+            "label": "clef_G",
+            "x": 134,
+            "y": 104,
+            "width": 10,
+            "height": 27,
+            "confidence": null
+        },
+        {
+            "id": "5",
+            "label": "clef_G",
+            "x": 134,
+            "y": 200,
+            "width": 10,
+            "height": 27,
+            "confidence": null
+        },
+        {
+            "id": "6",
+            "label": "clef_G",
+            "x": 134,
+            "y": 295,
+            "width": 10,
+            "height": 27,
+            "confidence": null
+        },
+        {
+            "id": "7",
+            "label": "keysig_Eb",
+            "x": 147,
+            "y": 100,
+            "width": 12,
+            "height": 17,
+            "confidence": null
+        },
+        {
+            "id": "8",
+            "label": "keysig_Eb",
+            "x": 147,
+            "y": 195,
+            "width": 12,
+            "height": 17,
+            "confidence": null
+        },
+        {
+            "id": "9",
+            "label": "keysig_Eb",
+            "x": 147,
+            "y": 290,
+            "width": 12,
+            "height": 18,
+            "confidence": null
+        },
+        {
+            "id": "A",
+            "label": "timesig_4_4",
+            "x": 160,
+            "y": 104,
+            "width": 8,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "B",
+            "label": "quarter_note",
+            "x": 173,
+            "y": 106,
+            "width": 5,
+            "height": 16,
+            "confidence": null
+        },
+        {
+            "id": "C",
+            "label": "quarter_note",
+            "x": 194,
+            "y": 106,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "D",
+            "label": "quarter_note",
+            "x": 215,
+            "y": 109,
+            "width": 5,
+            "height": 13,
+            "confidence": null
+        },
+        {
+            "id": "E",
+            "label": "quarter_note",
+            "x": 236,
+            "y": 108,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "F",
+            "label": "quarter_note",
+            "x": 263,
+            "y": 107,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "G",
+            "label": "quarter_note",
+            "x": 284,
+            "y": 107,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "H",
+            "label": "half_note",
+            "x": 305,
+            "y": 108,
+            "width": 5,
+            "height": 13,
+            "confidence": null
+        },
+        {
+            "id": "I",
+            "label": "quarter_note",
+            "x": 342,
+            "y": 101,
+            "width": 6,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "J",
+            "label": "quarter_note",
+            "x": 363,
+            "y": 101,
+            "width": 6,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "K",
+            "label": "quarter_note",
+            "x": 384,
+            "y": 102,
+            "width": 6,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "L",
+            "label": "quarter_note",
+            "x": 405,
+            "y": 102,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "M",
+            "label": "quarter_note",
+            "x": 432,
+            "y": 104,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "N",
+            "label": "quarter_note",
+            "x": 453,
+            "y": 104,
+            "width": 6,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "O",
+            "label": "quarter_note",
+            "x": 474,
+            "y": 106,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "P",
+            "label": "half_note",
+            "x": 304,
+            "y": 199,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "Q",
+            "label": "half_note",
+            "x": 483,
+            "y": 199,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "R",
+            "label": "half_note",
+            "x": 299,
+            "y": 299,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "S",
+            "label": "quarter_note",
+            "x": 460,
+            "y": 197,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "T",
+            "label": "quarter_note",
+            "x": 438,
+            "y": 197,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "U",
+            "label": "quarter_note",
+            "x": 410,
+            "y": 196,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "V",
+            "label": "quarter_note",
+            "x": 388,
+            "y": 196,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "W",
+            "label": "quarter_note",
+            "x": 366,
+            "y": 204,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "X",
+            "label": "quarter_note",
+            "x": 343,
+            "y": 204,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "Y",
+            "label": "quarter_note",
+            "x": 282,
+            "y": 197,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "Z",
+            "label": "quarter_note",
+            "x": 260,
+            "y": 197,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "a",
+            "label": "quarter_note",
+            "x": 232,
+            "y": 196,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "b",
+            "label": "quarter_note",
+            "x": 209,
+            "y": 196,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "c",
+            "label": "quarter_note",
+            "x": 187,
+            "y": 204,
+            "width": 5,
+            "height": 13,
+            "confidence": null
+        },
+        {
+            "id": "d",
+            "label": "quarter_note",
+            "x": 165,
+            "y": 204,
+            "width": 5,
+            "height": 13,
+            "confidence": null
+        },
+        {
+            "id": "e",
+            "label": "quarter_note",
+            "x": 165,
+            "y": 297,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "f",
+            "label": "quarter_note",
+            "x": 186,
+            "y": 296,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "g",
+            "label": "quarter_note",
+            "x": 208,
+            "y": 299,
+            "width": 5,
+            "height": 13,
+            "confidence": null
+        },
+        {
+            "id": "h",
+            "label": "quarter_note",
+            "x": 229,
+            "y": 299,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "i",
+            "label": "quarter_note",
+            "x": 256,
+            "y": 298,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "j",
+            "label": "quarter_note",
+            "x": 277,
+            "y": 298,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "k",
+            "label": "quarter_note",
+            "x": 336,
+            "y": 291,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "l",
+            "label": "quarter_note",
+            "x": 358,
+            "y": 291,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "m",
+            "label": "quarter_note",
+            "x": 379,
+            "y": 293,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "n",
+            "label": "quarter_note",
+            "x": 400,
+            "y": 293,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "o",
+            "label": "quarter_note",
+            "x": 427,
+            "y": 295,
+            "width": 5,
+            "height": 14,
+            "confidence": null
+        },
+        {
+            "id": "p",
+            "label": "quarter_note",
+            "x": 449,
+            "y": 295,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "q",
+            "label": "quarter_note",
+            "x": 470,
+            "y": 297,
+            "width": 5,
+            "height": 15,
+            "confidence": null
+        },
+        {
+            "id": "r",
+            "label": "quarter_rest",
+            "x": 491,
+            "y": 294,
+            "width": 4,
+            "height": 12,
+            "confidence": null
+        },
+        {
+            "id": "s",
+            "label": "quarter_rest",
+            "x": 494,
+            "y": 104,
+            "width": 4,
+            "height": 12,
+            "confidence": null
+        },
+        {
+            "id": "t",
+            "label": "measure",
+            "x": 255,
+            "y": 104,
+            "width": 1,
+            "height": 16,
+            "confidence": null
+        },
+        {
+            "id": "u",
+            "label": "measure",
+            "x": 335,
+            "y": 104,
+            "width": 2,
+            "height": 16,
+            "confidence": null
+        },
+        {
+            "id": "v",
+            "label": "measure",
+            "x": 425,
+            "y": 104,
+            "width": 1,
+            "height": 16,
+            "confidence": null
+        },
+        {
+            "id": "w",
+            "label": "measure",
+            "x": 514,
+            "y": 104,
+            "width": 1,
+            "height": 16,
+            "confidence": null
+        },
+        {
+            "id": "x",
+            "label": "measure",
+            "x": 252,
+            "y": 200,
+            "width": 1,
+            "height": 17,
+            "confidence": null
+        },
+        {
+            "id": "y",
+            "label": "measure",
+            "x": 336,
+            "y": 200,
+            "width": 1,
+            "height": 17,
+            "confidence": null
+        },
+        {
+            "id": "z",
+            "label": "measure",
+            "x": 431,
+            "y": 199,
+            "width": 1,
+            "height": 16,
+            "confidence": null
+        },
+        {
+            "id": "11",
+            "label": "measure",
+            "x": 514,
+            "y": 199,
+            "width": 1,
+            "height": 17,
+            "confidence": null
+        },
+        {
+            "id": "12",
+            "label": "measure",
+            "x": 249,
+            "y": 295,
+            "width": 1,
+            "height": 17,
+            "confidence": null
+        },
+        {
+            "id": "13",
+            "label": "measure",
+            "x": 329,
+            "y": 295,
+            "width": 1,
+            "height": 16,
+            "confidence": null
+        },
+        {
+            "id": "14",
+            "label": "measure",
+            "x": 420,
+            "y": 295,
+            "width": 2,
+            "height": 16,
+            "confidence": null
+        },
+        {
+            "id": "15",
+            "label": "note_head",
+            "x": 173,
+            "y": 112,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "16",
+            "label": "note_head",
+            "x": 194,
+            "y": 112,
+            "width": 5,
+            "height": 5,
+            "confidence": null
+        },
+        {
+            "id": "17",
+            "label": "note_head",
+            "x": 216,
+            "y": 104,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "18",
+            "label": "note_head",
+            "x": 236,
+            "y": 104,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "19",
+            "label": "note_head",
+            "x": 263,
+            "y": 102,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1A",
+            "label": "note_head",
+            "x": 284,
+            "y": 102,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1B",
+            "label": "note_head",
+            "x": 305,
+            "y": 104,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1C",
+            "label": "note_head",
+            "x": 342,
+            "y": 106,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1D",
+            "label": "note_head",
+            "x": 363,
+            "y": 106,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1E",
+            "label": "note_head",
+            "x": 384,
+            "y": 108,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1F",
+            "label": "note_head",
+            "x": 406,
+            "y": 108,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1G",
+            "label": "note_head",
+            "x": 432,
+            "y": 110,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1H",
+            "label": "note_head",
+            "x": 453,
+            "y": 110,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1I",
+            "label": "note_head",
+            "x": 474,
+            "y": 111,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1J",
+            "label": "note_head",
+            "x": 165,
+            "y": 199,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1K",
+            "label": "note_head",
+            "x": 187,
+            "y": 199,
+            "width": 4,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1L",
+            "label": "note_head",
+            "x": 210,
+            "y": 201,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1M",
+            "label": "note_head",
+            "x": 232,
+            "y": 201,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1N",
+            "label": "note_head",
+            "x": 260,
+            "y": 203,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1O",
+            "label": "note_head",
+            "x": 282,
+            "y": 203,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1P",
+            "label": "note_head",
+            "x": 304,
+            "y": 205,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1Q",
+            "label": "note_head",
+            "x": 343,
+            "y": 199,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1R",
+            "label": "note_head",
+            "x": 366,
+            "y": 199,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1S",
+            "label": "note_head",
+            "x": 388,
+            "y": 201,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1T",
+            "label": "note_head",
+            "x": 410,
+            "y": 201,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1U",
+            "label": "note_head",
+            "x": 438,
+            "y": 203,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1V",
+            "label": "note_head",
+            "x": 460,
+            "y": 203,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1W",
+            "label": "note_head",
+            "x": 483,
+            "y": 205,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1X",
+            "label": "note_head",
+            "x": 165,
+            "y": 302,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1Y",
+            "label": "note_head",
+            "x": 186,
+            "y": 302,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1Z",
+            "label": "note_head",
+            "x": 208,
+            "y": 295,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1a",
+            "label": "note_head",
+            "x": 229,
+            "y": 295,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1b",
+            "label": "note_head",
+            "x": 256,
+            "y": 293,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1c",
+            "label": "note_head",
+            "x": 277,
+            "y": 293,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1d",
+            "label": "note_head",
+            "x": 299,
+            "y": 295,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1e",
+            "label": "note_head",
+            "x": 336,
+            "y": 296,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1f",
+            "label": "note_head",
+            "x": 358,
+            "y": 297,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1g",
+            "label": "note_head",
+            "x": 379,
+            "y": 298,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1h",
+            "label": "note_head",
+            "x": 400,
+            "y": 298,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1i",
+            "label": "note_head",
+            "x": 427,
+            "y": 300,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1j",
+            "label": "note_head",
+            "x": 449,
+            "y": 300,
+            "width": 5,
+            "height": 3,
+            "confidence": null
+        },
+        {
+            "id": "1k",
+            "label": "note_head",
+            "x": 470,
+            "y": 302,
+            "width": 5,
+            "height": 4,
+            "confidence": null
+        },
+        {
+            "id": "1l",
+            "label": "harmony",
+            "x": 175,
+            "y": 84,
+            "width": 8,
+            "height": 6,
+            "confidence": null
+        },
+        {
+            "id": "1m",
+            "label": "harmony",
+            "x": 265,
+            "y": 84,
+            "width": 9,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "1n",
+            "label": "harmony",
+            "x": 307,
+            "y": 84,
+            "width": 9,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "1o",
+            "label": "harmony",
+            "x": 344,
+            "y": 84,
+            "width": 9,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "1p",
+            "label": "harmony",
+            "x": 386,
+            "y": 84,
+            "width": 9,
+            "height": 6,
+            "confidence": null
+        },
+        {
+            "id": "1q",
+            "label": "harmony",
+            "x": 433,
+            "y": 84,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "1r",
+            "label": "harmony",
+            "x": 476,
+            "y": 84,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "1s",
+            "label": "harmony",
+            "x": 167,
+            "y": 180,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "1t",
+            "label": "harmony",
+            "x": 212,
+            "y": 179,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "1u",
+            "label": "harmony",
+            "x": 261,
+            "y": 179,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "1v",
+            "label": "harmony",
+            "x": 306,
+            "y": 180,
+            "width": 8,
+            "height": 6,
+            "confidence": null
+        },
+        {
+            "id": "1w",
+            "label": "harmony",
+            "x": 345,
+            "y": 180,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "1x",
+            "label": "harmony",
+            "x": 390,
+            "y": 180,
+            "width": 9,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "1y",
+            "label": "harmony",
+            "x": 440,
+            "y": 180,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "1z",
+            "label": "harmony",
+            "x": 485,
+            "y": 180,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "21",
+            "label": "harmony",
+            "x": 167,
+            "y": 275,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "22",
+            "label": "harmony",
+            "x": 258,
+            "y": 275,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "23",
+            "label": "harmony",
+            "x": 300,
+            "y": 275,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "24",
+            "label": "harmony",
+            "x": 338,
+            "y": 275,
+            "width": 8,
+            "height": 6,
+            "confidence": null
+        },
+        {
+            "id": "25",
+            "label": "harmony",
+            "x": 380,
+            "y": 275,
+            "width": 9,
+            "height": 6,
+            "confidence": null
+        },
+        {
+            "id": "26",
+            "label": "harmony",
+            "x": 429,
+            "y": 275,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "27",
+            "label": "harmony",
+            "x": 472,
+            "y": 275,
+            "width": 8,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "28",
+            "label": "lyrics",
+            "x": 470,
+            "y": 313,
+            "width": 6,
+            "height": 6,
+            "confidence": null
+        },
+        {
+            "id": "29",
+            "label": "lyrics",
+            "x": 449,
+            "y": 313,
+            "width": 5,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2A",
+            "label": "lyrics",
+            "x": 427,
+            "y": 313,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2B",
+            "label": "lyrics",
+            "x": 400,
+            "y": 313,
+            "width": 7,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2C",
+            "label": "lyrics",
+            "x": 379,
+            "y": 313,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2D",
+            "label": "lyrics",
+            "x": 358,
+            "y": 313,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2E",
+            "label": "lyrics",
+            "x": 336,
+            "y": 313,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2F",
+            "label": "lyrics",
+            "x": 299,
+            "y": 313,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2G",
+            "label": "lyrics",
+            "x": 277,
+            "y": 313,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2H",
+            "label": "lyrics",
+            "x": 256,
+            "y": 313,
+            "width": 6,
+            "height": 6,
+            "confidence": null
+        },
+        {
+            "id": "2I",
+            "label": "lyrics",
+            "x": 229,
+            "y": 313,
+            "width": 7,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2J",
+            "label": "lyrics",
+            "x": 208,
+            "y": 313,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2K",
+            "label": "lyrics",
+            "x": 186,
+            "y": 312,
+            "width": 6,
+            "height": 6,
+            "confidence": null
+        },
+        {
+            "id": "2L",
+            "label": "lyrics",
+            "x": 165,
+            "y": 313,
+            "width": 6,
+            "height": 6,
+            "confidence": null
+        },
+        {
+            "id": "2M",
+            "label": "lyrics",
+            "x": 165,
+            "y": 218,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2N",
+            "label": "lyrics",
+            "x": 187,
+            "y": 217,
+            "width": 7,
+            "height": 8,
+            "confidence": null
+        },
+        {
+            "id": "2O",
+            "label": "lyrics",
+            "x": 210,
+            "y": 218,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2P",
+            "label": "lyrics",
+            "x": 232,
+            "y": 217,
+            "width": 7,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2Q",
+            "label": "lyrics",
+            "x": 260,
+            "y": 218,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2R",
+            "label": "lyrics",
+            "x": 282,
+            "y": 217,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2S",
+            "label": "lyrics",
+            "x": 305,
+            "y": 217,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2T",
+            "label": "lyrics",
+            "x": 343,
+            "y": 218,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2U",
+            "label": "lyrics",
+            "x": 365,
+            "y": 217,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2V",
+            "label": "lyrics",
+            "x": 388,
+            "y": 217,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2W",
+            "label": "lyrics",
+            "x": 410,
+            "y": 218,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2X",
+            "label": "lyrics",
+            "x": 438,
+            "y": 217,
+            "width": 7,
+            "height": 8,
+            "confidence": null
+        },
+        {
+            "id": "2Y",
+            "label": "lyrics",
+            "x": 460,
+            "y": 217,
+            "width": 7,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2Z",
+            "label": "lyrics",
+            "x": 483,
+            "y": 218,
+            "width": 7,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2a",
+            "label": "lyrics",
+            "x": 474,
+            "y": 122,
+            "width": 6,
+            "height": 6,
+            "confidence": null
+        },
+        {
+            "id": "2b",
+            "label": "lyrics",
+            "x": 453,
+            "y": 122,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2c",
+            "label": "lyrics",
+            "x": 432,
+            "y": 122,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2d",
+            "label": "lyrics",
+            "x": 405,
+            "y": 122,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2e",
+            "label": "lyrics",
+            "x": 384,
+            "y": 122,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2f",
+            "label": "lyrics",
+            "x": 363,
+            "y": 122,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2g",
+            "label": "lyrics",
+            "x": 342,
+            "y": 122,
+            "width": 7,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2h",
+            "label": "lyrics",
+            "x": 305,
+            "y": 122,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2i",
+            "label": "lyrics",
+            "x": 284,
+            "y": 122,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2j",
+            "label": "lyrics",
+            "x": 263,
+            "y": 122,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2k",
+            "label": "lyrics",
+            "x": 237,
+            "y": 122,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2l",
+            "label": "lyrics",
+            "x": 215,
+            "y": 122,
+            "width": 7,
+            "height": 6,
+            "confidence": null
+        },
+        {
+            "id": "2m",
+            "label": "lyrics",
+            "x": 194,
+            "y": 122,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        },
+        {
+            "id": "2n",
+            "label": "lyrics",
+            "x": 173,
+            "y": 122,
+            "width": 6,
+            "height": 7,
+            "confidence": null
+        }
+    ],
+    "height": 640,
+    "key": "반짝반짝작은별.png",
+    "width": 640
+}
