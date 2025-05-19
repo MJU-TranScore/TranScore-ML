@@ -254,7 +254,7 @@ class MakeScore:
                         ].copy()
                     
                 # 박스쳐진 staff_line에 선이 5개가 안들어가있는 경우가 있어서 y좌표에 약간의 padding을 적용
-                y_padding = int(row["height"] * 0.1)
+                y_padding = int(row["height"] * 0.05)
                 y1_pad = max(0, sy1 - y_padding)
                 y2_pad = min(vis.shape[0], sy2 + y_padding)
 
