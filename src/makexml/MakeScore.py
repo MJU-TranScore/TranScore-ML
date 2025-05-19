@@ -309,6 +309,9 @@ class MakeScore:
                             measiter.cur_keysig = keysig_index
                             measiter.interval_list = IntervalPreset.get_interval_list(measiter.cur_clef, measiter.cur_keysig)
                             print(measiter.interval_list)
+                            for el in m.getElementsByClass(key.KeySignature):
+                                m.remove(el)
+                            m.insert(0, key.KeySignature(keysig_index))
                             m.append(key.KeySignature(keysig_index))
 
                     elif "timesig" in cls: # 박자표
