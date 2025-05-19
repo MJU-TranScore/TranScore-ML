@@ -26,13 +26,13 @@ def main():
 
     # 악보이름
     # score = MakeScore.make_score(None) # 현재는 미리 만들어진 데이터셋을 이용해 변환
-    name = "떳다떳다비행기_테스트2"
+    name = "떳다떳다비행기_250519_1"
     
     # score 객체를 musicxml로 변환환
     MakeScore.score_to_xml(score, name)
     
     # 기존 musicxml 파일을 가지고 가사를 추출하여 json 형식의 문자열로 변환 
-    mxl_path = os.path.join(BASE_DIR, 'convert_result', '떳다떳다비행기_테스트2.xml')
+    mxl_path = os.path.join(BASE_DIR, 'convert_result', '떳다떳다비행기_250519_1.xml')
     lyrics_json = TextProcesser.get_lyrics_json_from_mxl(mxl_path)
     
     print(lyrics_json) # json 출력 확인 

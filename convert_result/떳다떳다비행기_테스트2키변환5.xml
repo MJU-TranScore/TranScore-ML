@@ -19,18 +19,18 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="Peff040d56262ef77a1c006b17924b19b">
+    <score-part id="Pa81022e8db0976e86ef8c2dc5c561b2b">
       <part-name />
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="Peff040d56262ef77a1c006b17924b19b">
+  <part id="Pa81022e8db0976e86ef8c2dc5c561b2b">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
         <divisions>10080</divisions>
         <key>
-          <fifths>1</fifths>
+          <fifths>2</fifths>
         </key>
         <time>
           <beats>4</beats>
@@ -44,16 +44,16 @@
       <note>
         <pitch>
           <step>C</step>
-          <alter>1</alter>
+          <alter>0</alter>
           <octave>5</octave>
         </pitch>
         <duration>15120</duration>
         <type>quarter</type>
         <dot />
-        <accidental>sharp</accidental>
+        <accidental>natural</accidental>
         <lyric name="1" number="1">
           <syllabic>single</syllabic>
-          <text>몇</text>
+          <text>멋</text>
         </lyric>
       </note>
       <note>
@@ -64,8 +64,7 @@
         <duration>5040</duration>
         <type>eighth</type>
         <lyric name="1" number="1">
-          <syllabic>single</syllabic>
-          <text>다</text>
+          <text />
         </lyric>
       </note>
       <note>
@@ -97,12 +96,12 @@
       <note>
         <pitch>
           <step>C</step>
-          <alter>1</alter>
+          <alter>0</alter>
           <octave>5</octave>
         </pitch>
         <duration>10080</duration>
         <type>quarter</type>
-        <accidental>sharp</accidental>
+        <accidental>natural</accidental>
         <lyric name="1" number="1">
           <syllabic>single</syllabic>
           <text>비</text>
@@ -111,7 +110,6 @@
       <note>
         <pitch>
           <step>C</step>
-          <alter>1</alter>
           <octave>5</octave>
         </pitch>
         <duration>10080</duration>
@@ -124,7 +122,6 @@
       <note>
         <pitch>
           <step>C</step>
-          <alter>1</alter>
           <octave>5</octave>
         </pitch>
         <duration>10080</duration>
@@ -194,12 +191,12 @@
       <note>
         <pitch>
           <step>C</step>
-          <alter>1</alter>
+          <alter>0</alter>
           <octave>5</octave>
         </pitch>
         <duration>10080</duration>
         <type>quarter</type>
-        <accidental>sharp</accidental>
+        <accidental>natural</accidental>
         <lyric name="1" number="1">
           <syllabic>single</syllabic>
           <text>날</text>
@@ -232,11 +229,6 @@
     </measure>
     <!--========================= Measure 5 ==========================-->
     <measure implicit="no" number="5">
-      <attributes>
-        <key>
-          <fifths>1</fifths>
-        </key>
-      </attributes>
       <note>
         <pitch>
           <step>C</step>
@@ -248,7 +240,7 @@
         <accidental>natural</accidental>
         <lyric name="1" number="1">
           <syllabic>single</syllabic>
-          <text>높</text>
+          <text>숲</text>
         </lyric>
       </note>
       <note>
@@ -283,7 +275,8 @@
         <duration>10080</duration>
         <type>quarter</type>
         <lyric name="1" number="1">
-          <text />
+          <syllabic>single</syllabic>
+          <text>숲</text>
         </lyric>
       </note>
       <note>
@@ -294,7 +287,8 @@
         <duration>10080</duration>
         <type>quarter</type>
         <lyric name="1" number="1">
-          <text />
+          <syllabic>single</syllabic>
+          <text>이</text>
         </lyric>
       </note>
     </measure>
@@ -303,10 +297,12 @@
       <note>
         <pitch>
           <step>C</step>
+          <alter>0</alter>
           <octave>5</octave>
         </pitch>
         <duration>10080</duration>
         <type>quarter</type>
+        <accidental>natural</accidental>
         <lyric name="1" number="1">
           <syllabic>single</syllabic>
           <text>날</text>
@@ -371,13 +367,15 @@
       <note>
         <pitch>
           <step>C</step>
+          <alter>0</alter>
           <octave>5</octave>
         </pitch>
         <duration>10080</duration>
         <type>quarter</type>
+        <accidental>natural</accidental>
         <lyric name="1" number="1">
           <syllabic>single</syllabic>
-          <text>비</text>
+          <text>H</text>
         </lyric>
       </note>
       <note>
