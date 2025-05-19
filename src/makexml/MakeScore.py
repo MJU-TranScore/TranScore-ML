@@ -252,9 +252,14 @@ class MakeScore:
                     cur_lyrics_df = lyrics_df[
                         (lyrics_df["y_center"] > row["y2"])
                         ].copy()
+                    
+                # 박스쳐진 staff_line에 선이 5개가 안들어가있는 경우가 있어서 y좌표에 약간의 padding을 적용
+                y_padding = int(row["height"] * 0.1)
+                y1_pad = max(0, sy1 - y_padding)
+                y2_pad = min(vis.shape[0], sy2 + y_padding)
 
                 # 이미지에서 잘라냄
-                staff_crop = vis[sy1:sy2, sx1:sx2]
+                staff_crop = vis[y1_pad:y2_pad, sx1:sx2]
 
                 # OpenCV로 5줄 찾음
                 staff_lines = StafflineUtils.extract_5lines(staff_crop)
