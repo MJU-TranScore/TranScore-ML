@@ -258,8 +258,8 @@ class MakeScore:
                 y1_pad = max(0, sy1 - y_padding)
                 y2_pad = min(vis.shape[0], sy2 + y_padding)
 
-                # 이미지에서 잘라냄
-                staff_crop = vis[y1_pad:y2_pad, sx1:sx2]
+                # 이미지에서 잘라냄, 강제 확장 x=0부터
+                staff_crop = vis[y1_pad:y2_pad, 0:vis.shape[1]]
 
                 # OpenCV로 5줄 찾음
                 staff_lines = StafflineUtils.extract_5lines(staff_crop)
