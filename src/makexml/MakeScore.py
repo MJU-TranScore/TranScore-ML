@@ -241,6 +241,30 @@ class MakeScore:
             staff_df = object_df[object_df["class_name"] == "staff_line"].copy()
             staff_df = staff_df.sort_values(by="y1").reset_index(drop=True)
 
+            # 🔁 staff_line이 감지되지 않았을 경우 → clef 기반 fallback 시도
+            if staff_df.empty:
+                clef_df = object_df[object_df["class_name"].isin(["clef_G", "clef_F"])]
+                fallback_staff_rows = []
+                for _, clef_row in clef_df.iterrows():
+                    fallback_lines = StafflineUtils.fallback_staffline_from_clef(clef_row, vis)
+                    if len(fallback_lines) == 5:
+                        print(f"[⚠️ fallback 적용] Clef 기준으로 staff_line 대체 성공: {fallback_lines}")
+                        fallback_staff_rows.append({
+                            "x1": 0,
+                            "x2": vis.shape[1],
+                            "y1": min(fallback_lines),
+                            "y2": max(fallback_lines),
+                            "x_center": vis.shape[1] / 2,
+                            "y_center": sum(fallback_lines) / 5,
+                            "width": vis.shape[1],
+                            "height": max(fallback_lines) - min(fallback_lines),
+                            "class_name": "staff_line",
+                            "class_id": -1,  # dummy
+                            "confidence": 0.01  # 낮은 신뢰도로 표시
+                        })
+                if fallback_staff_rows:
+                    staff_df = pd.DataFrame(fallback_staff_rows)
+                    
             # 해당 페이지의 탐지결과에서 가사 영역만 가진 dataframe과 코드 영역만 가진 dataframe
             lyrics_df = object_df[object_df["class_name"] == "lyrics"].copy()
             harmony_df = object_df[object_df["class_name"] == "harmony"].copy()
