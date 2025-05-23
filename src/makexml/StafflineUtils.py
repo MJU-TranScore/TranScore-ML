@@ -53,3 +53,43 @@ class StafflineUtils:
         filtered_df.reset_index(drop=True, inplace=True)
 
         return filtered_df
+
+    #fallback 로직 (음자리표로 staff_line 추정)
+    @staticmethod
+    def fallback_staffline_from_clef(clef_row, image):
+        h, w = image.shape[:2]
+
+        clef_y1 = int(clef_row["y1"])
+        clef_y2 = int(clef_row["y2"])
+        clef_height = clef_y2 - clef_y1
+
+        # Clef type에 따른 확장 비율 설정
+        if clef_row["class_name"] == "clef_F":  # 낮은 음자리표 (Bass Clef)
+            up_ratio = 0.05    # y1 기준 위쪽으로 5%
+            down_ratio = 0.30  # y2 기준 아래쪽으로 30%
+        elif clef_row["class_name"] == "clef_G":  # 높은 음자리표 (Treble Clef)
+            up_ratio = 0.05    # y1 기준 위쪽으로 15%
+            down_ratio = 0.05  # y2 기준 아래쪽으로 15%
+        else:
+            # 기본값 (예비 처리용)
+            up_ratio = 0.10
+            down_ratio = 0.10
+
+        # 확장된 crop 영역 계산
+        y1_pad = max(0, int(clef_y1 - clef_height * up_ratio))
+        y2_pad = min(h, int(clef_y2 + clef_height * down_ratio))
+
+        # 이미지 crop
+        staff_crop = image[y1_pad:y2_pad, 0:w]
+
+        # 오선 감지
+        local_staff_lines = StafflineUtils.extract_5lines(staff_crop)
+
+        # 성공 시, 원본 이미지 좌표로 보정해서 반환
+        if len(local_staff_lines) == 5:
+         staff_lines_global = [y + y1_pad for y in local_staff_lines]
+         print(f"[🟡 fallback] Clef 기반 오선 Y좌표: {staff_lines_global}")
+         return staff_lines_global
+        else:
+         print("[❌ fallback] Clef 기반 오선 감지 실패")
+         return []
