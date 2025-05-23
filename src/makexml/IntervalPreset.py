@@ -2,7 +2,7 @@ from music21 import pitch
 
 class IntervalPreset:
     # 키 종류
-    KEY_ORDER = ['C', 'G', 'D', 'A', 'E', 'B', 'Fs', 'Gb', 'Db', 'Ab', 'Eb', 'Bb', 'F']
+    KEY_ORDER = ['C', 'G', 'D', 'A', 'E', 'B', 'Fsharp', 'Gb', 'Db', 'Ab', 'Eb', 'Bb', 'F']
     # 각 키에 해당하는 숫자 
     KEY_PITCH_ORDER = [0, 5, 0, 7, 2, 9, 4, 0, 7, 2, 9, 4, 11]
     # 샾이 붙는 순서 
