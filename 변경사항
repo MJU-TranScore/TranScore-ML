@@ -1,6 +1,10 @@
 src/makexml
 - 추가
     - find_articulation_for_note_rest 메소드
+    - interval preset.py 에서 Fs->Fsharp
+    - MakeScore.py 에서 # 🔁 staff_line이 감지되지 않았을 경우 → clef 기반 fallback 시도
+    - StaffUtils.py 에서     #fallback 로직 (음자리표로 staff_line 추정)
+
 - 변경
     - from music21 import 부분
     - convert_df_to_score 메소드
