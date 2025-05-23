@@ -1,5 +1,5 @@
 from fractions import Fraction
-from music21 import chord,  stream, note, meter, key, clef, metadata, interval, bar
+from music21 import chord,  stream, note, meter, key, clef, metadata, interval, bar, expressions
 from src.makexml.ScoreInfo import ScoreInfo
 from src.makexml.ScoreIterator import ScoreIterator
 from src.makexml.MeasureIterator import MeasureIterator
@@ -53,6 +53,15 @@ class MakeScore:
         png_list = []
         return png_list
     """
+
+    # 음표와 쉼표에 articulation이 있는지 찾는 
+    @staticmethod
+    def find_articulation_for_note_rest(articulation_df, x1, x2):
+        result_df = articulation_df[
+            (articulation_df["x_center"] >= x1) & (articulation_df["x_center"] < x2)
+        ].copy()
+        return result_df
+
 
     #추가한 함수
     #staff_line이 겹쳐 탐지된 경우, y좌표 비슷한 줄끼리 병합하여
@@ -232,34 +241,12 @@ class MakeScore:
             staff_df = object_df[object_df["class_name"] == "staff_line"].copy()
             staff_df = staff_df.sort_values(by="y1").reset_index(drop=True)
 
-            # 🔁 staff_line이 감지되지 않았을 경우 → clef 기반 fallback 시도
-            if staff_df.empty:
-                clef_df = object_df[object_df["class_name"].isin(["clef_G", "clef_F"])]
-                fallback_staff_rows = []
-                for _, clef_row in clef_df.iterrows():
-                    fallback_lines = StafflineUtils.fallback_staffline_from_clef(clef_row, vis)
-                    if len(fallback_lines) == 5:
-                        print(f"[⚠️ fallback 적용] Clef 기준으로 staff_line 대체 성공: {fallback_lines}")
-                        fallback_staff_rows.append({
-                            "x1": 0,
-                            "x2": vis.shape[1],
-                            "y1": min(fallback_lines),
-                            "y2": max(fallback_lines),
-                            "x_center": vis.shape[1] / 2,
-                            "y_center": sum(fallback_lines) / 5,
-                            "width": vis.shape[1],
-                            "height": max(fallback_lines) - min(fallback_lines),
-                            "class_name": "staff_line",
-                            "class_id": -1,  # dummy
-                            "confidence": 0.01  # 낮은 신뢰도로 표시
-                        })
-                if fallback_staff_rows:
-                    staff_df = pd.DataFrame(fallback_staff_rows)
-
-
             # 해당 페이지의 탐지결과에서 가사 영역만 가진 dataframe과 코드 영역만 가진 dataframe
             lyrics_df = object_df[object_df["class_name"] == "lyrics"].copy()
             harmony_df = object_df[object_df["class_name"] == "harmony"].copy()
+
+            # 해당 페이지의 탐지결과에서 늘임표, 악센트 같이 음표,쉼표에 붙는 악상기호만 들고온 dataframe
+            articulation_df = object_df[object_df["class_name"].isin(["fermata_up", "fermata_down"])] # 현재는 늘임표만 있지만 향후 추가
 
             # 들고온 보표의 개수만큼 반복문
             for staff_index in range(len(staff_df)):
@@ -278,12 +265,32 @@ class MakeScore:
                         (lyrics_df["y_center"] > row["y2"])
                         ].copy()
                     
+                # 해당 보표의 articulation만 골라내기
+                cur_row = staff_df.iloc[staff_index]
+
+                if staff_index == 0:  # 첫 번째 보표인 경우
+                    upper_bound = cur_row["y1"] - (cur_row["y2"] - cur_row["y1"]) / 2
+                else:
+                    prev_row = staff_df.iloc[staff_index - 1]
+                    upper_bound = (prev_row["y2"] + cur_row["y1"]) / 2
+
+                if staff_index < len(staff_df) - 1:  # 마지막 보표가 아닌 경우
+                    next_row = staff_df.iloc[staff_index + 1]
+                    lower_bound = (cur_row["y2"] + next_row["y1"]) / 2
+                else:
+                    lower_bound = cur_row["y2"] + (cur_row["y2"] - cur_row["y1"]) / 2
+
+                cur_articulation_df = articulation_df[
+                    (articulation_df["y_center"] > upper_bound) &
+                    (articulation_df["y_center"] < lower_bound)
+                ].sort_values(by=["x_center", "y_center"]).copy()
+                    
                 # 박스쳐진 staff_line에 선이 5개가 안들어가있는 경우가 있어서 y좌표에 약간의 padding을 적용
                 y_padding = int(row["height"] * 0.05)
                 y1_pad = max(0, sy1 - y_padding)
                 y2_pad = min(vis.shape[0], sy2 + y_padding)
 
-                # 이미지에서 잘라냄
+                # 이미지에서 잘라냄, 강제 확장 x=0부터 crop
                 staff_crop = vis[y1_pad:y2_pad, 0:vis.shape[1]]
 
                 # OpenCV로 5줄 찾음
@@ -350,6 +357,23 @@ class MakeScore:
                     elif cls in MakeScore.REST_DURATION_MAP: # 쉼표
                         r = note.Rest()
                         r.duration.quarterLength = MakeScore.REST_DURATION_MAP[cls]
+                        # articulation 확인
+                        if not cur_articulation_df.empty:
+                            detected_articulation = MakeScore.find_articulation_for_note_rest(cur_articulation_df, row["x1"], row["x2"])
+
+                            if not detected_articulation.empty:
+                                for _, row in detected_articulation.iterrows():
+                                    atc_cls = row["class_name"]
+                                    if "fermata_up" in atc_cls:
+                                        # 늘임표 윗방향
+                                        f = expressions.Fermata('normal')
+                                        f.placement = 'above'
+                                        r.expressions.append(f)
+                                    elif "fermata_down" in atc_cls:
+                                        # 늘임표 아랫방향
+                                        f = expressions.Fermata('normal')
+                                        f.placement = 'below' 
+                                        r.expressions.append(f)
                         m.append(r)
                         #print(cls)
 
@@ -383,6 +407,25 @@ class MakeScore:
                                 if hasattr(note_obj, "accidental") and note_obj.accidental is not None and note_obj.accidental.displayStatus:
                                     c.notes[i].accidental = note_obj.accidental
                                     c.notes[i].accidental.displayStatus = True
+
+                            # articulation 확인
+                            if not cur_articulation_df.empty:
+                                detected_articulation = MakeScore.find_articulation_for_note_rest(cur_articulation_df, row["x1"], row["x2"])
+
+                                if not detected_articulation.empty:
+                                    for _, row in detected_articulation.iterrows():
+                                        atc_cls = row["class_name"]
+                                        if "fermata_up" in atc_cls:
+                                            # 늘임표 윗방향
+                                            f = expressions.Fermata('normal')
+                                            f.placement = 'above'
+                                            c.expressions.append(f)
+                                        elif "fermata_down" in atc_cls:
+                                            # 늘임표 아랫방향
+                                            f = expressions.Fermata('normal')
+                                            f.placement = 'below'
+                                            c.expressions.append(f)
+
 
                             # 가사 확인
                             lyrics_list = TextProcesser.find_text_list(cur_lyrics_df, row["x1"], row["x2"])
