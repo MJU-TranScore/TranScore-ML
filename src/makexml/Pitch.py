@@ -23,7 +23,7 @@ class Pitch:
 
         return: 해당 위치의 MIDI pitch (int), or None
         """
-        interval_list = measiter.interval_list
+        interval_list = measiter.get_interval_list()
 
         if len(staff_lines) != 5 or len(interval_list) != 19:
             return None
