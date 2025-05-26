@@ -343,10 +343,10 @@ class MakeScore:
 
                     if cid in [3,4]: # 음자리표
                         print("clef: ", cid)
-                        if scoiter.clef != cid:
-                            scoiter.clef = cid
-                            measiter.cur_clef = cid
-                            measiter.interval_list = IntervalPreset.get_interval_list(measiter.cur_clef, measiter.cur_keysig)
+                        if scoiter.get_cur_clef() != cid:
+                            scoiter.set_cur_clef(cid)
+                            measiter.set_cur_clef(cid)
+                            measiter.calc_interval_list()
 
                             if cid == 4:
                                 m.append(clef.TrebleClef())
@@ -355,16 +355,17 @@ class MakeScore:
 
                     elif "keysig" in cls: # 조표
                         keysig = cls.split("_")[1]
-                        print("keysig_index: ", cls)
-                        if IntervalPreset.KEY_ORDER[measiter.cur_keysig] != keysig:
+                        print("keysig: ", cls)
+                        if IntervalPreset.KEY_ORDER[measiter.get_cur_keysig()] != keysig:
                             keysig_index = IntervalPreset.KEY_ORDER.index(keysig)
+                            print("keysig_index: " , keysig_index)
                             if keysig_index > 6:
                                 keysig_index = keysig_index - 13
                             scoinfo.keysig_list.append(keysig_index)
-                            scoiter.cur_keysig = keysig_index
-                            measiter.cur_keysig = keysig_index
-                            measiter.interval_list = IntervalPreset.get_interval_list(measiter.cur_clef, measiter.cur_keysig)
-                            print(measiter.interval_list)
+                            scoiter.set_cur_keysig(keysig_index)
+                            measiter.set_cur_keysig(keysig_index)
+                            measiter.calc_interval_list()
+                            print(measiter.get_interval_list())
                             for el in m.getElementsByClass(key.KeySignature):
                                 m.remove(el)
                             m.insert(0, key.KeySignature(keysig_index))
@@ -372,11 +373,13 @@ class MakeScore:
 
                     elif "timesig" in cls: # 박자표
                         parts = cls.split("_")
-                        if scoiter.cur_timesig[0] != parts[1] or scoiter.cur_timesig[1] != parts[2]:
-                            scoiter.cur_timesig[0] = parts[1]
-                            scoiter.cur_timesig[1] = parts[2]
-                            measiter.measure_length = Fraction(int(parts[1])) * Fraction(4, int(parts[2]))
-                            m.append(meter.TimeSignature(f'{parts[1]}/{parts[2]}'))
+                        print("박자표 인식: ", parts)
+                        parts_int = [int(parts[1]), int(parts[2])]
+                        if not scoiter.compare_timesig(parts_int):
+                            scoiter.set_cur_timesig(parts_int)
+                            #measiter.measure_length = Fraction(int(parts[1])) * Fraction(4, int(parts[2]))
+                            measiter.set_cur_measure_length(parts_int)
+                            m.append(meter.TimeSignature(f'{parts_int[0]}/{parts_int[1]}'))
 
                     elif cls in MakeScore.REST_DURATION_MAP: # 쉼표
                         r = note.Rest()
@@ -399,9 +402,14 @@ class MakeScore:
                                         f.placement = 'below' 
                                         r.expressions.append(f)
                         m.append(r)
+                        measiter.subtract_remain_measure_length(duration)
                         #print(cls)
 
                     elif cls in MakeScore.NOTE_DURATION_MAP: # 음표
+                        # 조표가 나오지 않았는데 음표가 나오는 경우 C키임. 그레서 scoinfo 값 설정. scoiter와 measiter는 기본 C키 가정이므로 따로 설정해주지 않음. 
+                        if scoinfo.is_keysig_empty():
+                            scoinfo.add_keysig(0)
+
                         duration = MakeScore.NOTE_DURATION_MAP[cls]
                         c = chord.Chord()
                         # 점 음표 확인
@@ -477,7 +485,18 @@ class MakeScore:
                                 lyric_obj.number = i + 1
                                 #c.notes[0].lyrics.append(lyric_obj)
                                 c.addLyric(lyric)
+
+                            # 기존 마디가 가득 찬 경우 이건 마디인식을 실패한것으로 간주하여 새로운 마디로 시작
+                            # 이 경우 임시표에서 문제가 있을 수 있지만 안넣는것보다 나으므로 현재수준에선 추가함.     
+                            if measiter.get_cur_remain_measure_length() <= 0:
+                                print("마디 인식 실패 추정")
+                                part.append(m)
+                                measurenum += 1
+                                m = stream.Measure(number=measurenum)
+                                measiter.set_measiter_from_scoiter(scoiter)
+
                             m.append(c)
+                            measiter.subtract_remain_measure_length(duration)
                             print(c)
 
                     elif cls in ["measure", "measure_double", "measure_final"]:
@@ -489,7 +508,7 @@ class MakeScore:
                         part.append(m)
                         measurenum += 1
                         m = stream.Measure(number=measurenum)
-                        measiter.interval_list = IntervalPreset.get_interval_list(measiter.cur_clef, measiter.cur_keysig)
+                        measiter.set_measiter_from_scoiter(scoiter)
                     
                     """
                     elif cls in ["measure", "double_measure"]:
