@@ -1,6 +1,10 @@
-src/makexml
+makexml/MakeScore.py
 - 추가
     - find_articulation_for_note_rest 메소드
 - 변경
     - from music21 import 부분
     - convert_df_to_score 메소드
+
+makexml/Pitch.py
+- 변경
+    - find_pitch_from_y 메소드
