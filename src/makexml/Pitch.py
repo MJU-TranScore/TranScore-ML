@@ -3,6 +3,7 @@ import cv2
 import pandas as pd
 import numpy as np
 from src.makexml.IntervalPreset import IntervalPreset
+from music21.pitch import Accidental
 
 class Pitch:
 
@@ -82,16 +83,16 @@ class Pitch:
                 if adjust == 1:
                     interval_list[pitch_idx] += 1
                     n.pitch.midi = interval_list[pitch_idx]
-                    n.accidental = note.Accidental('sharp')
+                    n.accidental = Accidental('sharp')
                 elif adjust == -1:
                     interval_list[pitch_idx] -= 1
                     n.pitch.midi = interval_list[pitch_idx]
-                    n.accidental = note.Accidental('flat')
+                    n.accidental = Accidental('flat')
                 else:
                     temp_interval = IntervalPreset.get_interval_list(measiter.cur_clef, 0)
                     interval_list[pitch_idx] = temp_interval[pitch_idx]
                     n.pitch.midi = interval_list[pitch_idx]
-                    n.accidental = note.Accidental('natural')
+                    n.accidental = Accidental('natural')
                 return n
 
         n.pitch.midi = interval_list[pitch_idx]
