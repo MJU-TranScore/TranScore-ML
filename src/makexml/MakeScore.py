@@ -519,10 +519,9 @@ class MakeScore:
                     """
 
 
-        part.append(m)
-        measurenum += 1
-        m = stream.Measure(number=measurenum)
-        score.append(part)
+        m.rightBarline = bar.Barline("light-heavy")   # ✅ 마지막 마디에 끝세로줄 추가
+        part.append(m)                                # 마지막 마디를 파트에 추가
+        score.append(part)                            # 파트를 전체 악보에 추가
 
         return score
 
