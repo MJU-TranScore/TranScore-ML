@@ -26,3 +26,28 @@ makexml/ScoreIterator.py
 
 makexml/MeasureIterator.py
 - 전체 변경
+
+
+=======================
+
+
+<2025-05-27 커밋 사항>
+1. model에 note_head_template.png 파일 업로드
+2. pitch.py 파일 수정
+
+from music21.pitch import Accidental
+
+                    n.accidental = Accidental('sharp')
+                    n.accidental = Accidental('flat')
+                    n.accidental = Accidental('natural')
+
+3.m.rightBarline = bar.Barline("light-heavy")  # ✅ 마지막 마디에 종결줄 추가
+part.append(m)                                # 마지막 마디를 파트에 추가
+score.append(part)                            # 파트를 전체 악보에 추가
+
+4.         lyrics_list = TextProcesser.find_text_list(lyrics_df, row["x1"], row["x2"])
+
+
+3,4번은 makescore.py 수정 
+
+=======================
