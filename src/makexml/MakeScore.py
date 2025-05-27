@@ -460,7 +460,7 @@ class MakeScore:
 
 
                             # 가사 확인
-                            lyrics_list = TextProcesser.find_text_list(cur_lyrics_df, row["x1"], row["x2"])
+                            lyrics_list = TextProcesser.find_text_list(lyrics_df, row["x1"], row["x2"])
 
                             lyrics_data = []
                             for _, lyric in lyrics_list.iterrows():
