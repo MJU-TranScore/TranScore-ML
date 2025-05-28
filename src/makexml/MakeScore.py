@@ -405,6 +405,16 @@ class MakeScore:
                                         f = expressions.Fermata('normal')
                                         f.placement = 'below' 
                                         r.expressions.append(f)
+
+                        # 기존 마디가 가득 찬 경우 이건 마디인식을 실패한것으로 간주하여 새로운 마디로 시작
+                        # 이 경우 임시표에서 문제가 있을 수 있지만 안넣는것보다 나으므로 현재수준에선 추가함.     
+                        if measiter.get_cur_remain_measure_length() <= 0:
+                            print("마디 인식 실패 추정")
+                            part.append(m)
+                            measurenum += 1
+                            m = stream.Measure(number=measurenum)
+                            measiter.set_measiter_from_scoiter(scoiter)
+
                         m.append(r)
                         measiter.subtract_remain_measure_length(duration)
                         #print(cls)
