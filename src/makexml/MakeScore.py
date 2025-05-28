@@ -383,7 +383,8 @@ class MakeScore:
 
                     elif cls in MakeScore.REST_DURATION_MAP: # 쉼표
                         r = note.Rest()
-                        r.duration.quarterLength = MakeScore.REST_DURATION_MAP[cls]
+                        duration = MakeScore.REST_DURATION_MAP[cls]
+                        r.duration.quarterLength = duration
                         # articulation 확인
                         if not cur_articulation_df.empty:
                             detected_articulation = MakeScore.find_articulation_for_note_rest(cur_articulation_df, row["x1"], row["x2"])
@@ -460,7 +461,7 @@ class MakeScore:
 
 
                             # 가사 확인
-                            lyrics_list = TextProcesser.find_text_list(lyrics_df, row["x1"], row["x2"])
+                            lyrics_list = TextProcesser.find_text_list(cur_lyrics_df, row["x1"], row["x2"])
 
                             lyrics_data = []
                             for _, lyric in lyrics_list.iterrows():
