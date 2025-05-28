@@ -7,7 +7,7 @@ from src.makexml.Pitch import Pitch
 from src.makexml.StafflineUtils import StafflineUtils
 from src.makexml.IntervalPreset import IntervalPreset
 from src.makexml.MakeTestData import MakeTestData
-from src.makexml.TextProcesser import TextProcesser
+#from src.makexml.TextProcesser import TextProcesser
 from src.FilePath import BASE_DIR
 import random
 import string
@@ -264,10 +264,11 @@ class MakeScore:
                         })
                 if fallback_staff_rows:
                     staff_df = pd.DataFrame(fallback_staff_rows)
-                    
+            """ 서버 인스턴스의 한계로 가사는 잠시 중단         
             # 해당 페이지의 탐지결과에서 가사 영역만 가진 dataframe과 코드 영역만 가진 dataframe
             lyrics_df = object_df[object_df["class_name"] == "lyrics"].copy()
             harmony_df = object_df[object_df["class_name"] == "harmony"].copy()
+            """
 
             # 해당 페이지의 탐지결과에서 늘임표, 악센트 같이 음표,쉼표에 붙는 악상기호만 들고온 dataframe
             articulation_df = object_df[object_df["class_name"].isin(["fermata_up", "fermata_down"])] # 현재는 늘임표만 있지만 향후 추가
@@ -277,6 +278,7 @@ class MakeScore:
                 row = staff_df.iloc[staff_index]
                 sx1, sy1, sx2, sy2 = int(row["x1"]), int(row["y1"]), int(row["x2"]), int(row["y2"])
 
+                """ 서버 인스턴스의 한계로 가사는 잠시 중단
                 # 해당 보표의 가사만 골라내기
                 if staff_index < len(staff_df) - 1: # 마지막 보표가 아닌 경우
                     next_row = staff_df.iloc[staff_index+1]
@@ -288,7 +290,8 @@ class MakeScore:
                     cur_lyrics_df = lyrics_df[
                         (lyrics_df["y_center"] > row["y2"])
                         ].copy()
-                    
+                """ 
+                            
                 # 해당 보표의 articulation만 골라내기
                 cur_row = staff_df.iloc[staff_index]
 
@@ -459,7 +462,7 @@ class MakeScore:
                                             f.placement = 'below'
                                             c.expressions.append(f)
 
-
+                            """ 서버 인스턴스의 한계로 가사는 잠시 중단
                             # 가사 확인
                             lyrics_list = TextProcesser.find_text_list(cur_lyrics_df, row["x1"], row["x2"])
 
@@ -486,7 +489,8 @@ class MakeScore:
                                 lyric_obj.number = i + 1
                                 #c.notes[0].lyrics.append(lyric_obj)
                                 c.addLyric(lyric)
-
+                            """ 
+                            
                             # 기존 마디가 가득 찬 경우 이건 마디인식을 실패한것으로 간주하여 새로운 마디로 시작
                             # 이 경우 임시표에서 문제가 있을 수 있지만 안넣는것보다 나으므로 현재수준에선 추가함.     
                             if measiter.get_cur_remain_measure_length() <= 0:
