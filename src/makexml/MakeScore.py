@@ -510,6 +510,29 @@ class MakeScore:
                         m = stream.Measure(number=measurenum)
                         measiter.set_measiter_from_scoiter(scoiter)
                     
+                    elif cls in ["repeat_start", "repeat_end", "repeat_both"]: # 도돌이표
+                        if cls == "repeat_start": # 도돌이표 시작
+                            #if measiter.get_cur_remain_measure_length() > 0:
+                                 
+                            part.append(m)
+                            measurenum += 1
+                            m = stream.Measure(number=measurenum)
+                            m.rightBarline = bar.Repeat(direction='start')
+                            measiter.set_measiter_from_scoiter(scoiter)
+                        elif cls == "repeat_end": # 도돌이표 끝 
+                            m.rightBarline = bar.Repeat(direction='end')
+                            part.append(m)
+                            measurenum += 1
+                            m = stream.Measure(number=measurenum)
+                            measiter.set_measiter_from_scoiter(scoiter)
+                        elif cls == "repeat_both": # 도돌이표 양쪽 
+                            part.append(m)
+                            measurenum += 1
+                            m = stream.Measure(number=measurenum)
+                            m.rightBarline = bar.Repeat(direction='end')
+                            m.rightBarline = bar.Repeat(direction='start')
+                            measiter.set_measiter_from_scoiter(scoiter)
+
                     """
                     elif cls in ["measure", "double_measure"]:
                         part.append(m)
