@@ -1,22 +1,21 @@
 makexml/MakeScore.py
 - 추가
     - find_articulation_for_note_rest 메소드
-    - interval preset.py 에서 Fs->Fsharp
-    - MakeScore.py 에서 # 🔁 staff_line이 감지되지 않았을 경우 → clef 기반 fallback 시도
-    - StaffUtils.py 에서     #fallback 로직 (음자리표로 staff_line 추정)
-
+    #- interval preset.py 에서 Fs->Fsharp
+    #- MakeScore.py 에서 # 🔁 staff_line이 감지되지 않았을 경우 → clef 기반 fallback 시도
+    #- StaffUtils.py 에서     #fallback 로직 (음자리표로 staff_line 추정)
 - 변경
-    - from music21 import 부분
+    - from music21 import chord,  stream, note, meter, key, clef, metadata, interval, bar, expressions # import 할 요소 더 추가함 
     - convert_df_to_score 메소드
-
-makexml/MakeScore.py
-- 변경
     - def convert_df_to_score 메소드
-    
+    - from src.makexml.TextProcesser import TextProcesser 주석처리    
 
 makexml/Pitch.py
+- 추가
+    - from music21.pitch import Accidental # import 구문 추가 
 - 변경
     - find_pitch_from_y 메소드
+    - find_note_head 메소드 
 
 makexml/ScoreInfo.py
 - 전체 변경
@@ -27,7 +26,25 @@ makexml/ScoreIterator.py
 makexml/MeasureIterator.py
 - 전체 변경
 
+makexml/TextProcesser.py
+- 전체 주석처리 
 
+makexml/StafflineUtils.py
+- 추가
+    - fallback_staffline_from_clef 메소드
+
+makexml/IntervalPreset.py
+- 변경
+    - kEY_ORDER 변수 
+
+model
+- 추가
+    - note_head_template.png 이미지 추가 
+
+그 외 main.py에서 
+from src.makexml.TextProcesser import TextProcesser
+부분 주석처리하고 가사 테스트 하는 부분 주석처리해야함
+main은 각자 환경이 다르므로 깃허브에 푸시하지 않음. 
 =======================
 
 
