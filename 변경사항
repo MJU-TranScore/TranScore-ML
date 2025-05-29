@@ -9,7 +9,8 @@ makexml/MakeScore.py
     - convert_df_to_score 메소드
     - def convert_df_to_score 메소드
     - from src.makexml.TextProcesser import TextProcesser 주석처리    
-
+    - 음자리표 fallback 메소드 수정
+    - 끝세로줄 나오게 하는 로직 삭제 (light-hevay) 부분 삭제
 makexml/Pitch.py
 - 추가
     - from music21.pitch import Accidental # import 구문 추가 
