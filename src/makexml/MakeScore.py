@@ -238,14 +238,24 @@ class MakeScore:
         for idx, object_df in enumerate(object_dfs):
             vis = vis_list[idx]
             # 저장된 dataframe에서 보표에 대한 정보만 들고옴
+            # 1. YOLO로 검출된 staff_line을 먼저 가져옴
             staff_df = object_df[object_df["class_name"] == "staff_line"].copy()
             staff_df = staff_df.sort_values(by="y1").reset_index(drop=True)
 
-            # 🔁 staff_line이 감지되지 않았을 경우 → clef 기반 fallback 시도
-            if staff_df.empty:
-                clef_df = object_df[object_df["class_name"].isin(["clef_G", "clef_F"])]
-                fallback_staff_rows = []
-                for _, clef_row in clef_df.iterrows():
+            # 2. clef 영역 기준으로 개별 fallback 검토
+            clef_df = object_df[object_df["class_name"].isin(["clef_G", "clef_F"])]
+            fallback_staff_rows = []
+
+            for _, clef_row in clef_df.iterrows():
+                clef_y1 = clef_row["y1"]
+                clef_y2 = clef_row["y2"]
+
+                # 이 clef의 세로 범위 안에 들어가는 staff_line의 y_center가 없으면 fallback
+                matched_staff = staff_df[
+                    (staff_df["y_center"] >= clef_y1) & (staff_df["y_center"] <= clef_y2)
+                ]
+
+                if matched_staff.empty:
                     fallback_lines = StafflineUtils.fallback_staffline_from_clef(clef_row, vis)
                     if len(fallback_lines) == 5:
                         print(f"[⚠️ fallback 적용] Clef 기준으로 staff_line 대체 성공: {fallback_lines}")
@@ -259,11 +269,15 @@ class MakeScore:
                             "width": vis.shape[1],
                             "height": max(fallback_lines) - min(fallback_lines),
                             "class_name": "staff_line",
-                            "class_id": -1,  # dummy
-                            "confidence": 0.01  # 낮은 신뢰도로 표시
+                            "class_id": -1,
+                            "confidence": 0.01
                         })
-                if fallback_staff_rows:
-                    staff_df = pd.DataFrame(fallback_staff_rows)
+
+            # 3. fallback 결과가 있으면 기존 staff_df에 병합
+            if fallback_staff_rows:
+                fallback_df = pd.DataFrame(fallback_staff_rows)
+                staff_df = pd.concat([staff_df, fallback_df], ignore_index=True)
+                staff_df = staff_df.sort_values(by="y1").reset_index(drop=True)
             """ 서버 인스턴스의 한계로 가사는 잠시 중단         
             # 해당 페이지의 탐지결과에서 가사 영역만 가진 dataframe과 코드 영역만 가진 dataframe
             lyrics_df = object_df[object_df["class_name"] == "lyrics"].copy()
