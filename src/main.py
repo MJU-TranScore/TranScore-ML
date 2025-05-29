@@ -3,7 +3,7 @@ import os
 import cv2
 from src.FilePath import BASE_DIR
 from src.makexml.MakeScore import MakeScore
-#from src.makexml.TextProcesser import TextProcesser
+from src.makexml.TextProcesser import TextProcesser
 # 로직엔 문제가 없는 것 같지만 객체탐지 성능이 떨어져 제대로된 악보가 나오지 않는다
 
 def main():
@@ -31,11 +31,11 @@ def main():
     # score 객체를 musicxml로 변환환
     MakeScore.score_to_xml(score, name)
 
-    # ⛔ 가사 추출 관련 코드 임시 비활성화
+   
     # 기존 musicxml 파일을 가지고 가사를 추출하여 json 형식의 문자열로 변환 
-    #mxl_path = os.path.join(BASE_DIR, 'convert_result', '떳다떳다비행기_250519_1.xml')
-    #lyrics_json = TextProcesser.get_lyrics_json_from_mxl(mxl_path)
-    #print(lyrics_json) # json 출력 확인 
+    mxl_path = os.path.join(BASE_DIR, 'convert_result', '떳다떳다비행기_250519_1.xml')
+    lyrics_json = TextProcesser.get_lyrics_json_from_mxl(mxl_path)
+    print(lyrics_json) # json 출력 확인 
 
 
     # 만들어진 xml을 pdf로 변환환
