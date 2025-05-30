@@ -227,6 +227,11 @@ class MakeScore:
         scoinfo = ScoreInfo()
         scoiter = ScoreIterator()
         measiter = MeasureIterator()
+        # ✅ 박자표 감지 실패 대비 기본값 설정 (fallback)
+        if scoiter.get_cur_timesig() == [0, 0]:
+            print("[⚠️ 경고] 박자표 감지 실패 → 기본 4/4로 설정됨")
+            scoiter.set_cur_timesig([4, 4])
+            measiter.set_cur_measure_length([4, 4])
 
         # 2. 파트(보표) 생성
         part = stream.Part() # 단일성부. 피아노 양손악보면 2번 하는 식으로 나중에 조정 
