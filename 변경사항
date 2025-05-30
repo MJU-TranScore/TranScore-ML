@@ -5,6 +5,8 @@ makexml/MakeScore.py
     #- MakeScore.py 에서 # 🔁 staff_line이 감지되지 않았을 경우 → clef 기반 fallback 시도
     #- StaffUtils.py 에서     #fallback 로직 (음자리표로 staff_line 추정)
     #- MakeScore.py 에서 박자표 탐지 실패 시 기본 4/4 박자로 fallback 로직 추가
+    # -  # pitch 계산 전 staff_gap 계산 추가 
+    # - fallback] note_head 미탐지 → bounding box 기반 탐색 시도" 로직 추가
 - 변경
     - from music21 import chord,  stream, note, meter, key, clef, metadata, interval, bar, expressions # import 할 요소 더 추가함 
     - convert_df_to_score 메소드
@@ -34,6 +36,7 @@ makexml/TextProcesser.py
 makexml/StafflineUtils.py
 - 추가
     - fallback_staffline_from_clef 메소드
+    - detect_note_head_opencv 메소드와 find_note_head_in_box 메소드
 
 makexml/IntervalPreset.py
 - 변경
