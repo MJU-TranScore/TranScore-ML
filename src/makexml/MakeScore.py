@@ -453,13 +453,62 @@ class MakeScore:
                             print("dot",cls)
                         else:
                             print(cls)
+                            
+                        # pitch 계산 전 staff_gap 계산
+                        cur_staff_lines = cur_staff_df[cur_staff_df["class_name"] == "staff_line"]
+                        staff_lines_y = cur_staff_lines["y_center"].tolist()  # 또는 cur_staff_df에서 "staff_line"만 필터링
+                        staff_lines_y.sort()
+
+                        if len(staff_lines_y) >= 2:
+                            staff_gap = (max(staff_lines_y) - min(staff_lines_y)) / (len(staff_lines_y) - 1)
+                        else:
+                            staff_gap = 8  # 기본 fallback 값
 
                         # pitch 계산
                         head_df = Pitch.find_note_head(cur_staff_note_head, row["x1"], pitch_y_top, row["x2"], pitch_y_bottom)
                         print("음표탐지시도 완료")
+
                         if head_df.empty:
-                            print("탐지된 음표 없음")
-                            continue  # 또는 적절히 skip
+                            print("[⚠️ fallback] note_head 미탐지 → bounding box 기반 탐색 시도")
+                            results = StafflineUtils.detect_note_head_opencv(vis, (row["x1"], pitch_y_top, row["x2"], pitch_y_bottom), staff_gap)
+    
+                            if results:  # 여러 개 note_head 좌표 있음
+                                fallback_heads = pd.DataFrame([{
+                                    "class_id": 29,  # 또는 MakeTestData.CLASS_NAMES.index("note_head")
+                                    "class_name": "note_head",
+                                    "confidence": 0.80,
+                                    "x1": cx - 6, "y1": cy - 6, "x2": cx + 6, "y2": cy + 6,
+                                    "x_center": cx, "y_center": cy,
+                                    "width": 12, "height": 12
+                                } for cx, cy in results])
+
+                                cur_staff_note_head = pd.concat([cur_staff_note_head, fallback_heads], ignore_index=True)
+                                cur_staff_df = pd.concat([cur_staff_df, fallback_heads], ignore_index=True)
+                                head_df = fallback_heads
+                                print(f"[✅ fallback 성공] note_head {len(results)}개 추가됨")
+                            else:
+                                print("[❌ fallback 실패] note_head 감지 안됨")
+                                continue  # fallback까지 실패한 경우 skip
+                        # ✅ head_df 감지 후 중복 제거 + 이상치 필터링
+                        print(f"[🧠 debug] head_df 감지된 note_head 수: {len(head_df)}")
+                        if len(head_df) > 4:
+                            print("[⚠️ 제거] 비정상 head_df → 건너뜀")
+                            continue
+
+                        head_df = head_df.sort_values(by="x_center")
+                        filtered_heads = []
+                        last_x = -999
+                        for _, h in head_df.iterrows():
+                            if abs(h["x_center"] - last_x) > 5:
+                                filtered_heads.append(h)
+                                last_x = h["x_center"]
+                        head_df = pd.DataFrame(filtered_heads)
+
+                        if head_df.empty:
+                            print("[❌ 필터링 후 남은 head 없음 → skip]")
+                            continue
+        
+
                         pitches = []
                         for _, head in head_df.iterrows():
                             n = Pitch.find_pitch_from_y(cur_staff_df, head, staff_lines_global, measiter)
