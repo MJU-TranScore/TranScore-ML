@@ -4,6 +4,7 @@ makexml/MakeScore.py
     #- interval preset.py 에서 Fs->Fsharp
     #- MakeScore.py 에서 # 🔁 staff_line이 감지되지 않았을 경우 → clef 기반 fallback 시도
     #- StaffUtils.py 에서     #fallback 로직 (음자리표로 staff_line 추정)
+    #- MakeScore.py 에서 박자표 탐지 실패 시 기본 4/4 박자로 fallback 로직 추가
 - 변경
     - from music21 import chord,  stream, note, meter, key, clef, metadata, interval, bar, expressions # import 할 요소 더 추가함 
     - convert_df_to_score 메소드
