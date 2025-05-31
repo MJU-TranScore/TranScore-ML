@@ -93,3 +93,80 @@ class StafflineUtils:
         else:
          print("[❌ fallback] Clef 기반 오선 감지 실패")
          return []
+    @staticmethod
+    def find_note_head_in_box(image, bbox):
+        """
+        Bounding box 내부에서 OpenCV 기반으로 note_head 중심 좌표들을 찾아 리턴
+        - HoughCircle + contour 기반 detect_note_head_opencv 사용
+        - staff_gap은 bbox 세로 길이 기준으로 추정
+        """
+        x1, y1, x2, y2 = map(int, bbox)
+        staff_gap = max(4, (y2 - y1) / 5)
+
+        centers = StafflineUtils.detect_note_head_opencv(image, bbox, staff_gap)
+
+        if not centers:
+            print("[❌ fallback 실패] note_head 탐지 불가")
+            return []
+
+        print(f"[✅ fallback 성공] note_head {len(centers)}개 탐지")
+        return centers  # [(cx, cy), ...]
+    
+    @staticmethod
+    def detect_note_head_opencv(image, bbox, debug=False):
+        x1, y1, x2, y2 = map(int, bbox)
+
+        roi = image[y1:y2, x1:x2]
+        gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+        _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+
+        # 오선 제거
+        proj = np.sum(binary == 255, axis=1)
+        W = binary.shape[1]
+        staff_y = np.where(proj > 0.8 * W)[0]
+        splits = np.where(np.diff(staff_y) > 1)[0] + 1
+        groups = np.split(staff_y, splits)
+
+        mask = np.ones_like(binary, dtype=np.uint8) * 255
+        max_thick = 0
+        for g in groups:
+            start, end = g[0], g[-1]
+            mask[start:end + 1, :] = 0
+            max_thick = max(max_thick, end - start + 1)
+
+        no_staff = cv2.bitwise_and(binary, mask)
+
+        # 스템 제거
+        v_open = cv2.getStructuringElement(cv2.MORPH_RECT, (1, binary.shape[0] // 8))
+        stems = cv2.morphologyEx(no_staff, cv2.MORPH_OPEN, v_open, iterations=2)
+        clean = cv2.subtract(no_staff, stems)
+
+        # 노이즈 정리
+        round_k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+        clean = cv2.morphologyEx(clean, cv2.MORPH_OPEN, round_k)
+        clean = cv2.dilate(clean, round_k)
+
+        contours, _ = cv2.findContours(clean, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        centers = []
+        for cnt in contours:
+            if cv2.contourArea(cnt) < 50:
+                continue
+            x_, y_, w_, h_ = cv2.boundingRect(cnt)
+            if h_ > 2 * w_ or w_ / h_ > 3:
+                continue
+            if len(cnt) >= 5:
+                _, axes, _ = cv2.fitEllipse(cnt)
+                MA, ma = max(axes), min(axes)
+                if ma / MA < 0.5:
+                    continue
+            cx = x_ + w_ // 2 + x1
+            cy = y_ + h_ // 2 + y1
+            centers.append((cx, cy))
+
+            if debug:
+                cv2.drawContours(image, [cnt + [x1, y1]], -1, (0, 0, 255), 1)
+                cv2.circle(image, (cx, cy), 3, (255, 0, 0), -1)
+
+        return centers
+
+

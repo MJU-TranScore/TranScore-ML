@@ -234,6 +234,11 @@ class MakeScore:
         scoinfo = ScoreInfo()
         scoiter = ScoreIterator()
         measiter = MeasureIterator()
+        # ✅ 박자표 감지 실패 대비 기본값 설정 (fallback)
+        if scoiter.get_cur_timesig() == [0, 0]:
+            print("[⚠️ 경고] 박자표 감지 실패 → 기본 4/4로 설정됨")
+            scoiter.set_cur_timesig([4, 4])
+            measiter.set_cur_measure_length([4, 4])
 
         # 2. 파트(보표) 생성
         part = stream.Part() # 단일성부. 피아노 양손악보면 2번 하는 식으로 나중에 조정 
@@ -245,14 +250,24 @@ class MakeScore:
         for idx, object_df in enumerate(object_dfs):
             vis = vis_list[idx]
             # 저장된 dataframe에서 보표에 대한 정보만 들고옴
+            # 1. YOLO로 검출된 staff_line을 먼저 가져옴
             staff_df = object_df[object_df["class_name"] == "staff_line"].copy()
             staff_df = staff_df.sort_values(by="y1").reset_index(drop=True)
 
-            # 🔁 staff_line이 감지되지 않았을 경우 → clef 기반 fallback 시도
-            if staff_df.empty:
-                clef_df = object_df[object_df["class_name"].isin(["clef_G", "clef_F"])]
-                fallback_staff_rows = []
-                for _, clef_row in clef_df.iterrows():
+            # 2. clef 영역 기준으로 개별 fallback 검토
+            clef_df = object_df[object_df["class_name"].isin(["clef_G", "clef_F"])]
+            fallback_staff_rows = []
+
+            for _, clef_row in clef_df.iterrows():
+                clef_y1 = clef_row["y1"]
+                clef_y2 = clef_row["y2"]
+
+                # 이 clef의 세로 범위 안에 들어가는 staff_line의 y_center가 없으면 fallback
+                matched_staff = staff_df[
+                    (staff_df["y_center"] >= clef_y1) & (staff_df["y_center"] <= clef_y2)
+                ]
+
+                if matched_staff.empty:
                     fallback_lines = StafflineUtils.fallback_staffline_from_clef(clef_row, vis)
                     if len(fallback_lines) == 5:
                         print(f"[⚠️ fallback 적용] Clef 기준으로 staff_line 대체 성공: {fallback_lines}")
@@ -266,11 +281,15 @@ class MakeScore:
                             "width": vis.shape[1],
                             "height": max(fallback_lines) - min(fallback_lines),
                             "class_name": "staff_line",
-                            "class_id": -1,  # dummy
-                            "confidence": 0.01  # 낮은 신뢰도로 표시
+                            "class_id": -1,
+                            "confidence": 0.01
                         })
-                if fallback_staff_rows:
-                    staff_df = pd.DataFrame(fallback_staff_rows)
+
+            # 3. fallback 결과가 있으면 기존 staff_df에 병합
+            if fallback_staff_rows:
+                fallback_df = pd.DataFrame(fallback_staff_rows)
+                staff_df = pd.concat([staff_df, fallback_df], ignore_index=True)
+                staff_df = staff_df.sort_values(by="y1").reset_index(drop=True)
             """ 서버 인스턴스의 한계로 가사는 잠시 중단         
             # 해당 페이지의 탐지결과에서 가사 영역만 가진 dataframe과 코드 영역만 가진 dataframe
             lyrics_df = object_df[object_df["class_name"] == "lyrics"].copy()
@@ -441,13 +460,62 @@ class MakeScore:
                             print("dot",cls)
                         else:
                             print(cls)
+                            
+                        # pitch 계산 전 staff_gap 계산
+                        cur_staff_lines = cur_staff_df[cur_staff_df["class_name"] == "staff_line"]
+                        staff_lines_y = cur_staff_lines["y_center"].tolist()  # 또는 cur_staff_df에서 "staff_line"만 필터링
+                        staff_lines_y.sort()
+
+                        if len(staff_lines_y) >= 2:
+                            staff_gap = (max(staff_lines_y) - min(staff_lines_y)) / (len(staff_lines_y) - 1)
+                        else:
+                            staff_gap = 8  # 기본 fallback 값
 
                         # pitch 계산
                         head_df = Pitch.find_note_head(cur_staff_note_head, row["x1"], pitch_y_top, row["x2"], pitch_y_bottom)
                         print("음표탐지시도 완료")
+
                         if head_df.empty:
-                            print("탐지된 음표 없음")
-                            continue  # 또는 적절히 skip
+                            print("[⚠️ fallback] note_head 미탐지 → bounding box 기반 탐색 시도")
+                            results = StafflineUtils.detect_note_head_opencv(vis, (row["x1"], pitch_y_top, row["x2"], pitch_y_bottom), staff_gap)
+    
+                            if results:  # 여러 개 note_head 좌표 있음
+                                fallback_heads = pd.DataFrame([{
+                                    "class_id": 29,  # 또는 MakeTestData.CLASS_NAMES.index("note_head")
+                                    "class_name": "note_head",
+                                    "confidence": 0.80,
+                                    "x1": cx - 6, "y1": cy - 6, "x2": cx + 6, "y2": cy + 6,
+                                    "x_center": cx, "y_center": cy,
+                                    "width": 12, "height": 12
+                                } for cx, cy in results])
+
+                                cur_staff_note_head = pd.concat([cur_staff_note_head, fallback_heads], ignore_index=True)
+                                cur_staff_df = pd.concat([cur_staff_df, fallback_heads], ignore_index=True)
+                                head_df = fallback_heads
+                                print(f"[✅ fallback 성공] note_head {len(results)}개 추가됨")
+                            else:
+                                print("[❌ fallback 실패] note_head 감지 안됨")
+                                continue  # fallback까지 실패한 경우 skip
+                        # ✅ head_df 감지 후 중복 제거 + 이상치 필터링
+                        print(f"[🧠 debug] head_df 감지된 note_head 수: {len(head_df)}")
+                        if len(head_df) > 4:
+                            print("[⚠️ 제거] 비정상 head_df → 건너뜀")
+                            continue
+
+                        head_df = head_df.sort_values(by="x_center")
+                        filtered_heads = []
+                        last_x = -999
+                        for _, h in head_df.iterrows():
+                            if abs(h["x_center"] - last_x) > 5:
+                                filtered_heads.append(h)
+                                last_x = h["x_center"]
+                        head_df = pd.DataFrame(filtered_heads)
+
+                        if head_df.empty:
+                            print("[❌ 필터링 후 남은 head 없음 → skip]")
+                            continue
+        
+
                         pitches = []
                         for _, head in head_df.iterrows():
                             n = Pitch.find_pitch_from_y(cur_staff_df, head, staff_lines_global, measiter)
@@ -564,7 +632,6 @@ class MakeScore:
                     """
 
 
-        m.rightBarline = bar.Barline("light-heavy")   # ✅ 마지막 마디에 끝세로줄 추가
         part.append(m)                                # 마지막 마디를 파트에 추가
         score.append(part)                            # 파트를 전체 악보에 추가
 

@@ -37,12 +37,10 @@ def main():
     
     # score 객체를 musicxml로 변환환
     MakeScore.score_to_xml(score, name)
-    
     """
     # 기존 musicxml 파일을 가지고 가사를 추출하여 json 형식의 문자열로 변환 
     mxl_path = os.path.join(BASE_DIR, 'convert_result', '곰세마리_20250529-1.xml')
     lyrics_json = TextProcesser.get_lyrics_json_from_mxl(mxl_path)
-    
     print(lyrics_json) # json 출력 확인 
     """
 
