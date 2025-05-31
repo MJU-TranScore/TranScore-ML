@@ -1,3 +1,16 @@
+2025.05.28 이후 수정사항
+src.exception 디렉토리에 각종 exception 클래스 작성
+
+src.makexml.MakeScore.py
+- 변경
+    - imgs_to_df 메소드 
+    - 
+-추가
+    - from src.exception.EmptyDataFrameError import EmptyDataFrameError 추가
+    - from src.exception.EmptyImageError import EmptyImageError 추가 
+
+
+////////////////////////
 makexml/MakeScore.py
 - 추가
     - find_articulation_for_note_rest 메소드
