@@ -8,6 +8,8 @@ from src.makexml.StafflineUtils import StafflineUtils
 from src.makexml.IntervalPreset import IntervalPreset
 from src.makexml.MakeTestData import MakeTestData
 #from src.makexml.TextProcesser import TextProcesser
+from src.exception.EmptyDataFrameError import EmptyDataFrameError
+from src.exception.EmptyImageError import EmptyImageError
 from src.FilePath import BASE_DIR
 import random
 import string
@@ -177,12 +179,17 @@ class MakeScore:
     # 이미지 리스트를 받아 pandas dataframe으로 변환시켜주는 함수 
     @staticmethod
     def imgs_to_df(img_list):
+        if not img_list:
+            raise EmptyImageError("이미지 없음")
         df_list = []
         vis_list = img_list.copy() # 원본 이미지 복사헤서 사용 
         detection_results = MakeScore.detect_object(vis_list)
 
         for result in detection_results:
             df_list.append(MakeScore.convert_result_to_df(result))
+
+        if not df_list:
+            raise EmptyDataFrameError("악보로부터 탐지된 객체 없음")
 
         return df_list
 
