@@ -89,7 +89,7 @@ class Pitch:
                     n.pitch.midi = interval_list[pitch_idx]
                     n.accidental = Accidental('flat')
                 else:
-                    temp_interval = IntervalPreset.get_interval_list(measiter.cur_clef, 0)
+                    temp_interval = IntervalPreset.get_interval_list(measiter.get_cur_clef(), 0)
                     interval_list[pitch_idx] = temp_interval[pitch_idx]
                     n.pitch.midi = interval_list[pitch_idx]
                     n.accidental = Accidental('natural')

@@ -57,6 +57,9 @@ class MeasureIterator:
     def get_interval_list(self):
         return self.__interval_list
     
+    def get_cur_clef(self):
+        return self.__cur_clef
+
     def calc_interval_list(self):
         self.__interval_list = IntervalPreset.get_interval_list(self.__cur_clef, self.__cur_keysig)
 

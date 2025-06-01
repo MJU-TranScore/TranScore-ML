@@ -221,9 +221,9 @@ class MakeScore:
         """
 
         # 변환
-        score = MakeScore.convert_df_to_score(object_dfs, vis_list)
+        score, scoinfo = MakeScore.convert_df_to_score(object_dfs, vis_list)
 
-        return score
+        return score, scoinfo
 
     # 각 이미지와 이미지에서 탐지된 객체들을 페이지별로 리스트 형태로 건내줌
     # 그러면 이걸 Score 객체로 변환시켜줌 
@@ -390,7 +390,7 @@ class MakeScore:
                             print("keysig_index: " , keysig_index)
                             if keysig_index > 6:
                                 keysig_index = keysig_index - 13
-                            scoinfo.keysig_list.append(keysig_index)
+                            scoinfo.add_keysig(keysig_index)
                             scoiter.set_cur_keysig(keysig_index)
                             measiter.set_cur_keysig(keysig_index)
                             measiter.calc_interval_list()
@@ -436,6 +436,7 @@ class MakeScore:
                         # 이 경우 임시표에서 문제가 있을 수 있지만 안넣는것보다 나으므로 현재수준에선 추가함.     
                         if measiter.get_cur_remain_measure_length() <= 0:
                             print("마디 인식 실패 추정")
+                            print(f"마디{measurenum} 추가")
                             part.append(m)
                             measurenum += 1
                             m = stream.Measure(number=measurenum)
@@ -580,6 +581,7 @@ class MakeScore:
                             # 이 경우 임시표에서 문제가 있을 수 있지만 안넣는것보다 나으므로 현재수준에선 추가함.     
                             if measiter.get_cur_remain_measure_length() <= 0:
                                 print("마디 인식 실패 추정")
+                                print(f"마디{measurenum} 추가")
                                 part.append(m)
                                 measurenum += 1
                                 m = stream.Measure(number=measurenum)
@@ -595,6 +597,7 @@ class MakeScore:
                         elif cls == "measure_final":
                           m.rightBarline = bar.Barline("light-heavy") 
 
+                        print(f"마디{measurenum} 추가")
                         part.append(m)
                         measurenum += 1
                         m = stream.Measure(number=measurenum)
@@ -604,6 +607,7 @@ class MakeScore:
                         if cls == "repeat_start": # 도돌이표 시작
                             #if measiter.get_cur_remain_measure_length() > 0:
                                  
+                            print(f"마디{measurenum} 추가")
                             part.append(m)
                             measurenum += 1
                             m = stream.Measure(number=measurenum)
@@ -611,11 +615,13 @@ class MakeScore:
                             measiter.set_measiter_from_scoiter(scoiter)
                         elif cls == "repeat_end": # 도돌이표 끝 
                             m.rightBarline = bar.Repeat(direction='end')
+                            print(f"마디{measurenum} 추가")
                             part.append(m)
                             measurenum += 1
                             m = stream.Measure(number=measurenum)
                             measiter.set_measiter_from_scoiter(scoiter)
                         elif cls == "repeat_both": # 도돌이표 양쪽 
+                            print(f"마디{measurenum} 추가")
                             part.append(m)
                             measurenum += 1
                             m = stream.Measure(number=measurenum)
@@ -631,11 +637,11 @@ class MakeScore:
                         measiter.interval_list = IntervalPreset.get_interval_list(measiter.cur_clef, measiter.cur_keysig)
                     """
 
-
+        print(f"마디{measurenum} 추가")
         part.append(m)                                # 마지막 마디를 파트에 추가
         score.append(part)                            # 파트를 전체 악보에 추가
 
-        return score
+        return score, scoinfo
 
     # 키를 변환하는 함수 
     # Score 객체와 변환할 값을 정수로 받아서 키를 변환
