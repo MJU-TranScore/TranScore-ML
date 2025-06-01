@@ -4,11 +4,26 @@ src.exception 디렉토리에 각종 exception 클래스 작성
 src.makexml.MakeScore.py
 - 변경
     - imgs_to_df 메소드 
-    - 
--추가
+    - convert_df_to_score 메소드 
+- 추가
     - from src.exception.EmptyDataFrameError import EmptyDataFrameError 추가
     - from src.exception.EmptyImageError import EmptyImageError 추가 
 
+src.makexml.MeasureIterator.py
+- 추가
+    - get_cur_clef 메소드 추가
+
+src.makexml.Pitch.py
+- 변경
+    - find_pitch_from_y 메소드 
+
+src.makexml.ScoreInfo.py
+- 전체 수정 
+
+src.makexml.StafflineUtils.py
+- 추가
+    - find_note_head_in_box 메소드 
+    - detect_note_head_opencv 메소드 
 
 ////////////////////////
 makexml/MakeScore.py
