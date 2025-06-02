@@ -78,6 +78,7 @@ model
 from src.makexml.TextProcesser import TextProcesser
 부분 주석처리하고 가사 테스트 하는 부분 주석처리해야함
 main은 각자 환경이 다르므로 깃허브에 푸시하지 않음. 
+main2.py 파일을 만들어서 푸쉬하였음
 =======================
 
 
