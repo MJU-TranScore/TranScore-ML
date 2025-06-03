@@ -507,6 +507,19 @@ class MakeScore:
                                 cur_staff_df = pd.concat([cur_staff_df, fallback_heads], ignore_index=True)
                                 head_df = fallback_heads
                                 print(f"[✅ fallback 성공] note_head {len(results)}개 추가됨")
+
+                                head_df = head_df.sort_values(by="x_center")
+                                filtered_heads = []
+                                last_x = -999
+                                for _, h in head_df.iterrows():
+                                    if abs(h["x_center"] - last_x) > 5:
+                                        filtered_heads.append(h)
+                                        last_x = h["x_center"]
+                                head_df = pd.DataFrame(filtered_heads)
+
+                                if head_df.empty:
+                                    print("[❌ 필터링 후 남은 head 없음 → skip]")
+                                    continue
                             else:
                                 print("[❌ fallback 실패] note_head 감지 안됨")
                                 continue  # fallback까지 실패한 경우 skip
@@ -514,19 +527,6 @@ class MakeScore:
                         print(f"[🧠 debug] head_df 감지된 note_head 수: {len(head_df)}")
                         if len(head_df) > 4:
                             print("[⚠️ 제거] 비정상 head_df → 건너뜀")
-                            continue
-
-                        head_df = head_df.sort_values(by="x_center")
-                        filtered_heads = []
-                        last_x = -999
-                        for _, h in head_df.iterrows():
-                            if abs(h["x_center"] - last_x) > 5:
-                                filtered_heads.append(h)
-                                last_x = h["x_center"]
-                        head_df = pd.DataFrame(filtered_heads)
-
-                        if head_df.empty:
-                            print("[❌ 필터링 후 남은 head 없음 → skip]")
                             continue
         
 
