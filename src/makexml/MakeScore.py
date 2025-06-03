@@ -1,5 +1,5 @@
 from fractions import Fraction
-from music21 import chord,  stream, note, meter, key, clef, metadata, interval, bar, expressions, layout, key
+from music21 import chord,  stream, note, meter, key, clef, metadata, interval, bar, expressions, layout, key, meter
 from src.makexml.ScoreInfo import ScoreInfo
 from src.makexml.ScoreIterator import ScoreIterator
 from src.makexml.MeasureIterator import MeasureIterator
@@ -406,6 +406,12 @@ class MakeScore:
                         if(parts[1] == "C"):
                             print("C 형태 박자표")
                             parts_int = [4,4]
+                            scoiter.set_cur_timesig(parts_int)
+                            measiter.set_cur_measure_length(parts_int)
+                            time_sig = meter.TimeSignature('4/4')
+                            time_sig.symbol = 'common'
+                            m.append(time_sig)
+                            continue
                         else:
                             parts_int = [int(parts[1]), int(parts[2])]
                         if not scoiter.compare_timesig(parts_int):
