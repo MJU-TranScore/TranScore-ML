@@ -1,3 +1,12 @@
+2025.06.04 수정사항
+src.make_score.MakeScore
+- 변경
+    - from music21에 meter 추가
+    - merge_staff_lines 메소드
+    - convert_df_to_score 메소드 
+
+
+///////////////////////
 2025.06.03 수정사항 
 """
 pip install pymupdf 를 추가로 설치(pdf를 이미지로 바꿔주는 라이브러리)
