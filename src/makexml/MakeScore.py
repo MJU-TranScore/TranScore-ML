@@ -93,11 +93,15 @@ class MakeScore:
                     continue
                 y1_j = staff_lines.loc[j, "y1"]
                 y2_j = staff_lines.loc[j, "y2"]
-
+                """
                 if abs(y1_i - y1_j) < y_threshold and abs(y2_i - y2_j) < y_threshold:
                     group.append(staff_lines.loc[j])
                     used[j] = True
-
+                """
+                y_center_j = staff_lines.loc[j,"y_center"]
+                if y1_i < y_center_j and y_center_j < y2_i:
+                    group.append(staff_lines.loc[j])
+                    used[j] = True
             y1_avg = float(np.mean([g["y1"] for g in group]))
             y2_avg = float(np.mean([g["y2"] for g in group]))
             x1 = 0
@@ -404,7 +408,10 @@ class MakeScore:
                     elif "timesig" in cls: # 박자표
                         parts = cls.split("_")
                         print("박자표 인식: ", parts)
-                        parts_int = [int(parts[1]), int(parts[2])]
+                        if(parts[1] == "C"):
+                            parts_int = [4,4]
+                        else:
+                            parts_int = [int(parts[1]), int(parts[2])]
                         if not scoiter.compare_timesig(parts_int):
                             scoiter.set_cur_timesig(parts_int)
                             #measiter.measure_length = Fraction(int(parts[1])) * Fraction(4, int(parts[2]))
@@ -483,7 +490,7 @@ class MakeScore:
     
                             if results:  # 여러 개 note_head 좌표 있음
                                 fallback_heads = pd.DataFrame([{
-                                    "class_id": 29,  # 또는 MakeTestData.CLASS_NAMES.index("note_head")
+                                    "class_id": 32,  # 또는 MakeTestData.CLASS_NAMES.index("note_head")
                                     "class_name": "note_head",
                                     "confidence": 0.80,
                                     "x1": cx - 6, "y1": cy - 6, "x2": cx + 6, "y2": cy + 6,
