@@ -301,13 +301,6 @@ class MakeScore:
 
             # 들고온 보표의 개수만큼 반복문
             for staff_index in range(len(staff_df)):
-                """
-                if part.getElementsByClass(stream.Measure):
-                    last_measure = part.getElementsByClass(stream.Measure)[-1]
-                    print(last_measure)
-                    last_measure.insert(0, layout.SystemLayout(isNew=True))
-                    print(f"마디번호 {measurenum}에서 줄바꿈")
-                """
 
                 row = staff_df.iloc[staff_index]
                 sx1, sy1, sx2, sy2 = int(row["x1"]), int(row["y1"]), int(row["x2"]), int(row["y2"])
@@ -637,23 +630,49 @@ class MakeScore:
                             m.rightBarline = bar.Repeat(direction='start')
                             measiter.set_measiter_from_scoiter(scoiter)
 
-                    """
-                    elif cls in ["measure", "double_measure"]:
-                        part.append(m)
-                        measurenum += 1
-                        m = stream.Measure(number=measurenum)
-                        measiter.interval_list = IntervalPreset.get_interval_list(measiter.cur_clef, measiter.cur_keysig)
-                    """
         if not len(m.notesAndRests) == 0: # 끝세로줄을 만들고 다시 마디를 만드는데 이 경우 마지막에 빈 마디가 들어가므로 음표,쉼표가 없으면 안넣기
             print(f"마디{measurenum} 추가")
             part.append(m)                                # 마지막 마디를 파트에 추가
-        score.append(part)                            # 파트를 전체 악보에 추가
+        score.append(part) 
+                                   # 파트를 전체 악보에 추가
         for i in range(0, measurenum-1, 4):
-            print(f"{i}번째 마디 줄바꿈 시도")
             forth = part.getElementsByClass(stream.Measure)[i]
             forth.insert(0, layout.SystemLayout(isNew=True))
-            print(f"{i}번째 마디 줄바꿈 성공")
+        score = MakeScore.correct_accidental(score) 
+
         return score, scoinfo
+    
+    # 조금이라도 이상한 임시표 줄여주는 메소드 
+    @staticmethod
+    def correct_accidental(score):
+        intv = interval.Interval("P1")
+        new_score = score.transpose(intv)
+
+        # 2. 마디별로 조표에 맞게 enharmonic 정리
+        for m in new_score.recurse().getElementsByClass('Measure'):
+            if len(m.notesAndRests) == 0:
+                print("마디가 비었음")
+                continue
+            # 현재 마디의 조표 추정
+            k_sig = m.getElementsByClass(key.KeySignature)
+            current_key = k_sig[0].asKey() if k_sig else m.analyze('key')  # fallback
+        
+            for ch in m.recurse().getElementsByClass(chord.Chord):
+                new_pitches = []
+                for p in ch.pitches:
+                    # 조표와 일치하지 않으면 enharmonic으로 시도
+                    if current_key.accidentalByStep(p.step) != p.accidental:
+                        enh = p.getEnharmonic()
+                        if current_key.accidentalByStep(enh.step) == enh.accidental:
+                            new_pitches.append(enh)
+                        else:
+                            new_pitches.append(p)
+                    else:
+                        new_pitches.append(p)
+                ch.pitches = new_pitches
+
+        return new_score
+        
 
     # 키를 변환하는 함수 
     # Score 객체와 변환할 값을 정수로 받아서 키를 변환
