@@ -4,6 +4,7 @@ import cv2
 from src.FilePath import BASE_DIR
 from src.makexml.MakeScore import MakeScore
 from src.exception import *
+from src.fileconverter.ImageConverter import ImageConverter  
 # from src.makexml.TextProcesser import TextProcesser
 # 로직엔 문제가 없는 것 같지만 객체탐지 성능이 떨어져 제대로된 악보가 나오지 않는다
 
