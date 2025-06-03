@@ -644,13 +644,15 @@ class MakeScore:
                         m = stream.Measure(number=measurenum)
                         measiter.interval_list = IntervalPreset.get_interval_list(measiter.cur_clef, measiter.cur_keysig)
                     """
-
-        print(f"마디{measurenum} 추가")
-        part.append(m)                                # 마지막 마디를 파트에 추가
+        if not len(m.notesAndRests) == 0: # 끝세로줄을 만들고 다시 마디를 만드는데 이 경우 마지막에 빈 마디가 들어가므로 음표,쉼표가 없으면 안넣기
+            print(f"마디{measurenum} 추가")
+            part.append(m)                                # 마지막 마디를 파트에 추가
         score.append(part)                            # 파트를 전체 악보에 추가
-        for i in range(0, measurenum, 4):
+        for i in range(0, measurenum-1, 4):
+            print(f"{i}번째 마디 줄바꿈 시도")
             forth = part.getElementsByClass(stream.Measure)[i]
             forth.insert(0, layout.SystemLayout(isNew=True))
+            print(f"{i}번째 마디 줄바꿈 성공")
         return score, scoinfo
 
     # 키를 변환하는 함수 
@@ -686,6 +688,9 @@ class MakeScore:
 
             # 2. 마디별로 조표에 맞게 enharmonic 정리
             for m in new_score.recurse().getElementsByClass('Measure'):
+                if len(m.notesAndRests) == 0:
+                    print("마디가 비었음")
+                    continue
                 # 현재 마디의 조표 추정
                 k_sig = m.getElementsByClass(key.KeySignature)
                 current_key = k_sig[0].asKey() if k_sig else m.analyze('key')  # fallback
