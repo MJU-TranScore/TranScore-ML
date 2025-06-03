@@ -1,3 +1,30 @@
+2025.06.03 수정사항 
+"""
+pip install pymupdf 를 추가로 설치(pdf를 이미지로 바꿔주는 라이브러리)
+img_list 만드는 부분이랑 make_score 호출하는 부분은 main2.py 참고
+"""
+src.exception.__init__.py
+- 추가
+    - __all__ 부분 "NotImageError" 추가
+
+src.exception.NotImageError.py 클래스 추가
+
+src.fileconverter.ImageConverter.py 클래스 추가 
+
+src.makexml.MakeScore.py
+- 변경
+    - from music21에 layout, key 추가
+    - convert_df_to_score 메소드 
+    - change_key 메소드 
+
+-추가
+    - correct_accidental 메소드
+
+model.weight
+- 새로운 모델로 교체 
+
+
+/////////////////////
 2025.05.28 이후 수정사항
 src.exception 디렉토리에 각종 exception 클래스 작성
 
