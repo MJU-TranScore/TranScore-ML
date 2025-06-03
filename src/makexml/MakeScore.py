@@ -1,5 +1,5 @@
 from fractions import Fraction
-from music21 import chord,  stream, note, meter, key, clef, metadata, interval, bar, expressions
+from music21 import chord,  stream, note, meter, key, clef, metadata, interval, bar, expressions, layout
 from src.makexml.ScoreInfo import ScoreInfo
 from src.makexml.ScoreIterator import ScoreIterator
 from src.makexml.MeasureIterator import MeasureIterator
@@ -301,6 +301,14 @@ class MakeScore:
 
             # 들고온 보표의 개수만큼 반복문
             for staff_index in range(len(staff_df)):
+                """
+                if part.getElementsByClass(stream.Measure):
+                    last_measure = part.getElementsByClass(stream.Measure)[-1]
+                    print(last_measure)
+                    last_measure.insert(0, layout.SystemLayout(isNew=True))
+                    print(f"마디번호 {measurenum}에서 줄바꿈")
+                """
+
                 row = staff_df.iloc[staff_index]
                 sx1, sy1, sx2, sy2 = int(row["x1"]), int(row["y1"]), int(row["x2"]), int(row["y2"])
 
@@ -640,7 +648,9 @@ class MakeScore:
         print(f"마디{measurenum} 추가")
         part.append(m)                                # 마지막 마디를 파트에 추가
         score.append(part)                            # 파트를 전체 악보에 추가
-
+        for i in range(0, measurenum, 4):
+            forth = part.getElementsByClass(stream.Measure)[i]
+            forth.insert(0, layout.SystemLayout(isNew=True))
         return score, scoinfo
 
     # 키를 변환하는 함수 
