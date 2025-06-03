@@ -1,5 +1,5 @@
 from fractions import Fraction
-from music21 import chord,  stream, note, meter, key, clef, metadata, interval, bar, expressions, layout
+from music21 import chord,  stream, note, meter, key, clef, metadata, interval, bar, expressions, layout, key
 from src.makexml.ScoreInfo import ScoreInfo
 from src.makexml.ScoreIterator import ScoreIterator
 from src.makexml.MeasureIterator import MeasureIterator
@@ -683,6 +683,29 @@ class MakeScore:
             interval_str  = change[diff]
             intv = interval.Interval(interval_str)
             new_score = score.transpose(intv)
+
+            # 2. 마디별로 조표에 맞게 enharmonic 정리
+            for m in new_score.recurse().getElementsByClass('Measure'):
+                # 현재 마디의 조표 추정
+                k_sig = m.getElementsByClass(key.KeySignature)
+                current_key = k_sig[0].asKey() if k_sig else m.analyze('key')  # fallback
+        
+                for ch in m.recurse().getElementsByClass(chord.Chord):
+                    new_pitches = []
+                    for p in ch.pitches:
+                        # 조표와 일치하지 않으면 enharmonic으로 시도
+                        if current_key.accidentalByStep(p.step) != p.accidental:
+                            enh = p.getEnharmonic()
+                            if current_key.accidentalByStep(enh.step) == enh.accidental:
+                                new_pitches.append(enh)
+                            else:
+                                new_pitches.append(p)
+                        else:
+                            new_pitches.append(p)
+                    ch.pitches = new_pitches
+
+            # 3. 임시표 정리
+            #new_score.makeAccidentals(inPlace=True)
             print("키 변환 완료")
             return new_score
         
