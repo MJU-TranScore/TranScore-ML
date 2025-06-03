@@ -238,11 +238,6 @@ class MakeScore:
         scoinfo = ScoreInfo()
         scoiter = ScoreIterator()
         measiter = MeasureIterator()
-        # ✅ 박자표 감지 실패 대비 기본값 설정 (fallback)
-        if scoiter.get_cur_timesig() == [0, 0]:
-            print("[⚠️ 경고] 박자표 감지 실패 → 기본 4/4로 설정됨")
-            scoiter.set_cur_timesig([4, 4])
-            measiter.set_cur_measure_length([4, 4])
 
         # 2. 파트(보표) 생성
         part = stream.Part() # 단일성부. 피아노 양손악보면 2번 하는 식으로 나중에 조정 
@@ -409,6 +404,7 @@ class MakeScore:
                         parts = cls.split("_")
                         print("박자표 인식: ", parts)
                         if(parts[1] == "C"):
+                            print("C 형태 박자표")
                             parts_int = [4,4]
                         else:
                             parts_int = [int(parts[1]), int(parts[2])]
@@ -419,6 +415,11 @@ class MakeScore:
                             m.append(meter.TimeSignature(f'{parts_int[0]}/{parts_int[1]}'))
 
                     elif cls in MakeScore.REST_DURATION_MAP: # 쉼표
+                        # ✅ 박자표 감지 실패 대비 기본값 설정 (fallback)
+                        if scoiter.get_cur_timesig() == [0, 0]:
+                            print("[⚠️ 경고] 박자표 감지 실패 → 기본 4/4로 설정됨")
+                            scoiter.set_cur_timesig([4, 4])
+                            measiter.set_cur_measure_length([4, 4])
                         r = note.Rest()
                         duration = MakeScore.REST_DURATION_MAP[cls]
                         r.duration.quarterLength = duration
@@ -458,7 +459,11 @@ class MakeScore:
                         # 조표가 나오지 않았는데 음표가 나오는 경우 C키임. 그레서 scoinfo 값 설정. scoiter와 measiter는 기본 C키 가정이므로 따로 설정해주지 않음. 
                         if scoinfo.is_keysig_empty():
                             scoinfo.add_keysig(0)
-
+                        # ✅ 박자표 감지 실패 대비 기본값 설정 (fallback)
+                        if scoiter.get_cur_timesig() == [0, 0]:
+                            print("[⚠️ 경고] 박자표 감지 실패 → 기본 4/4로 설정됨")
+                            scoiter.set_cur_timesig([4, 4])
+                            measiter.set_cur_measure_length([4, 4])
                         duration = MakeScore.NOTE_DURATION_MAP[cls]
                         c = chord.Chord()
                         # 점 음표 확인
